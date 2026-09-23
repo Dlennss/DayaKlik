@@ -127,19 +127,13 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                   <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-[#ff4966] ring-2 ring-[#1c79ff]" />
                 </Link>
               ) : null}
-              <Link href={getHref("/login", isLoggedIn)} prefetch={false} className="flex min-w-0 items-center gap-1.5 rounded-full bg-white px-2 py-1.5 text-[#075dff] shadow-[0_10px_22px_rgba(0,42,130,0.18)]">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#eaf3ff]">
-                  <UserRound className="h-[18px] w-[18px]" strokeWidth={2.4} />
-                </span>
-                <span className="block max-w-[78px] min-w-0">
-                  {isLoggedIn ? <span className="block truncate text-[9px] font-bold leading-none text-[#4779d9]">Halo,</span> : null}
-                  <span className={isLoggedIn ? "mt-0.5 flex min-w-0 items-center gap-0.5 text-[13px] font-black leading-none" : "flex min-w-0 items-center gap-0.5 text-[13px] font-black leading-none"}>
-                    <span className="truncate">
-                    {isLoggedIn ? shownName : "Masuk"}
-                    </span>
-                    <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
-                  </span>
-                </span>
+              <Link
+                href={getHref("/login", isLoggedIn)}
+                prefetch={false}
+                className="inline-flex h-10 min-w-[86px] items-center justify-center gap-1 rounded-full bg-white px-4 text-[13px] font-black leading-none text-[#075dff] shadow-[0_10px_22px_rgba(0,42,130,0.18)]"
+              >
+                {isLoggedIn ? shownName : "Masuk"}
+                <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
               </Link>
             </div>
           </div>
