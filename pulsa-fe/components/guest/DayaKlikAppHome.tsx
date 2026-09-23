@@ -100,32 +100,42 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
           <div className="absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_54%,#0043bd_100%)]" />
           <div className="absolute left-[46%] top-0 h-full w-24 rotate-12 bg-white/8" />
 
-          <div className="relative flex items-center justify-between gap-2.5">
-            <Link href={isLoggedIn ? "/user" : "/"} prefetch={false} aria-label="DayaKlik" className="min-w-0 flex-1">
-              <img src={asset("02_logo_brand/logo_lengkap_transparan.png")} alt="DayaKlik" className="h-[44px] w-auto max-w-[178px] object-contain min-[375px]:h-[48px] min-[375px]:max-w-[190px]" />
+          <div className="relative flex items-center justify-between gap-3">
+            <Link href={isLoggedIn ? "/user" : "/"} prefetch={false} aria-label="DayaKlik" className="flex min-w-0 flex-1 items-center gap-2.5">
+              <span className="grid h-[50px] w-[50px] shrink-0 place-items-center rounded-[15px] bg-white/95 shadow-[0_10px_24px_rgba(0,35,112,0.20)]">
+                <img src={asset("02_logo_brand/simbol_logo_transparan.png")} alt="" className="h-[44px] w-[44px] object-contain" />
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate text-[24px] font-black leading-none text-white">
+                  Daya<span className="text-[#dfff5d]">Klik</span>
+                </span>
+                <span className="mt-1 block truncate text-[10px] font-bold uppercase leading-none text-white/82">
+                  Daya Untuk Harimu
+                </span>
+              </span>
             </Link>
 
-            <div className="flex shrink-0 items-center gap-1.5">
+            <div className="flex shrink-0 items-center gap-2">
               <Link
                 href={getHref("/transaksi", isLoggedIn)}
                 prefetch={false}
                 aria-label="Notifikasi"
-                className="relative grid h-9 w-9 place-items-center rounded-[11px] border border-white/25 bg-white/12 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] min-[375px]:h-10 min-[375px]:w-10"
+                className="relative grid h-10 w-10 place-items-center rounded-[13px] border border-white/25 bg-white/14 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]"
               >
-                <Bell className="h-[18px] w-[18px] min-[375px]:h-5 min-[375px]:w-5" strokeWidth={2.4} />
+                <Bell className="h-5 w-5" strokeWidth={2.4} />
                 <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-[#ff4966] ring-2 ring-[#1c79ff]" />
               </Link>
-              <Link href={getHref("/login", isLoggedIn)} prefetch={false} className="flex min-w-0 items-center gap-1.5">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/20 min-[375px]:h-10 min-[375px]:w-10">
-                  <UserRound className="h-5 w-5 min-[375px]:h-6 min-[375px]:w-6" strokeWidth={2.4} />
+              <Link href={getHref("/login", isLoggedIn)} prefetch={false} className="flex min-w-0 items-center gap-1.5 rounded-full bg-white/14 py-1 pl-1 pr-2.5 ring-1 ring-white/18">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/22">
+                  <UserRound className="h-5 w-5" strokeWidth={2.4} />
                 </span>
-                <span className="block max-w-[74px] min-w-0 min-[375px]:max-w-[88px]">
+                <span className="block max-w-[68px] min-w-0 min-[375px]:max-w-[82px]">
                   {isLoggedIn ? <span className="block truncate text-[10px] font-semibold leading-none">Halo,</span> : null}
-                  <span className="mt-1 flex min-w-0 items-center gap-0.5 text-[14px] font-black leading-none min-[375px]:text-[15px]">
+                  <span className={isLoggedIn ? "mt-1 flex min-w-0 items-center gap-0.5 text-[14px] font-black leading-none" : "flex min-w-0 items-center gap-0.5 text-[14px] font-black leading-none"}>
                     <span className="truncate">
                     {isLoggedIn ? shownName : "Masuk"}
                     </span>
-                    <ChevronDown className="h-3.5 w-3.5 shrink-0 min-[375px]:h-4 min-[375px]:w-4" strokeWidth={3} />
+                    <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
                   </span>
                 </span>
               </Link>
