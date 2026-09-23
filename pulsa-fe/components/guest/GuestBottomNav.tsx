@@ -31,17 +31,18 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
     : pathname.startsWith("/login");
 
   return (
-    <section className="brand-bottom-nav fixed bottom-3 left-1/2 z-[90] w-[calc(100%-2rem)] max-w-[430px] -translate-x-1/2 overflow-visible rounded-[26px] border border-white/85 bg-white/96 shadow-[0_-6px_32px_rgba(6,48,111,0.14),0_18px_38px_rgba(6,48,111,0.12)] backdrop-blur-xl md:w-[390px]">
-      <div className="grid grid-cols-5 items-end px-5 pb-[calc(0.7rem+env(safe-area-inset-bottom))] pt-4">
+    <section className="brand-bottom-nav fixed bottom-3 left-1/2 z-[90] w-full max-w-[390px] -translate-x-1/2 overflow-visible px-4">
+      <div className="rounded-[24px] border border-white/85 bg-white/96 px-3 py-2 shadow-[0_-6px_32px_rgba(6,48,111,0.14),0_18px_38px_rgba(6,48,111,0.12)] backdrop-blur-xl">
+      <div className="grid grid-cols-5 items-end pb-[calc(0.35rem+env(safe-area-inset-bottom))] pt-2">
         <Link href="/" prefetch={false} className={navClass(homeActive)}>
-          <span className={homeActive ? "grid h-13 w-13 place-items-center rounded-[16px] bg-[#e9f4ff]" : "grid h-13 w-13 place-items-center"}>
-            <img src={asset("12_webp_ringan/11_siap_pakai_256__beranda_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
+          <span className={homeActive ? "grid h-12 min-w-14 place-items-center rounded-[14px] bg-[#e9f4ff]" : "grid h-12 min-w-14 place-items-center"}>
+            <img src={asset("12_webp_ringan/11_siap_pakai_256__beranda_nav_256.webp")} alt="" className="h-[34px] w-[34px] object-contain" />
           </span>
           <span className={textClass}>Beranda</span>
         </Link>
 
         <Link href="/transaksi" prefetch={false} className={navClass(historyActive)}>
-          <span className="grid h-13 w-13 place-items-center">
+          <span className="grid h-12 min-w-14 place-items-center">
             <img src={asset("12_webp_ringan/11_siap_pakai_256__transaksi_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
           </span>
           <span className={textClass}>Transaksi</span>
@@ -55,18 +56,19 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
         </Link>
 
         <Link href="/promo" prefetch={false} className={navClass(promoActive)}>
-          <span className="grid h-13 w-13 place-items-center">
+          <span className="grid h-12 min-w-14 place-items-center">
             <img src={asset("12_webp_ringan/11_siap_pakai_256__promo_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
           </span>
           <span className={textClass}>Promo</span>
         </Link>
 
         <Link href={accountHref} prefetch={false} className={navClass(accountActive)}>
-          <span className="grid h-13 w-13 place-items-center">
+          <span className="grid h-12 min-w-14 place-items-center">
             <img src={asset("12_webp_ringan/11_siap_pakai_256__akun_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
           </span>
           <span className={textClass}>Akun</span>
         </Link>
+      </div>
       </div>
     </section>
   );

@@ -240,15 +240,15 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
     .filter((group) => group.items.length > 0);
 
   return (
-    <section className="space-y-3 pb-24">
+    <section className="space-y-3 pb-28">
       <div className="sticky top-0 z-20 -mx-4 bg-[#f1f5fc]/92 px-4 pb-3 pt-3 backdrop-blur-xl">
-        <label className="flex h-13 items-center gap-3 rounded-[22px] border border-emerald-950/10 bg-white px-4 shadow-[0_12px_30px_rgba(6,78,59,0.08)]">
-          <Search className="h-5 w-5 shrink-0 text-[#185adb]" />
+        <label className="flex h-12 items-center gap-2.5 rounded-[18px] border border-emerald-950/10 bg-white px-4 shadow-[0_10px_24px_rgba(6,78,59,0.07)]">
+          <Search className="h-[18px] w-[18px] shrink-0 text-[#185adb]" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Cari pulsa, tagihan, voucher..."
-            className="h-full min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-800 outline-none placeholder:text-slate-400"
+            className="h-full min-w-0 flex-1 bg-transparent text-[13px] font-semibold text-slate-800 outline-none placeholder:text-slate-400"
           />
         </label>
 
@@ -258,7 +258,7 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
               type="button"
               onClick={() => setActiveGroup("semua")}
               className={cn(
-                "h-9 rounded-full px-4 text-xs font-black transition",
+                "h-8 rounded-full px-3.5 text-[11px] font-black transition",
                 activeGroup === "semua"
                   ? "bg-[#12316b] text-white shadow-[0_10px_20px_rgba(5,46,38,0.22)]"
                   : "border border-emerald-950/10 bg-white text-slate-600"
@@ -272,7 +272,7 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
                 type="button"
                 onClick={() => setActiveGroup(group.id)}
                 className={cn(
-                  "h-9 rounded-full px-4 text-xs font-black transition",
+                  "h-8 rounded-full px-3.5 text-[11px] font-black transition",
                   activeGroup === group.id
                     ? "bg-[#12316b] text-white shadow-[0_10px_20px_rgba(5,46,38,0.22)]"
                     : "border border-emerald-950/10 bg-white text-slate-600"
@@ -285,13 +285,13 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-[24px] border border-lime-200/70 bg-linear-to-r from-[#fff8e7] via-white to-[#f1f5fc] px-4 py-3 shadow-[0_12px_28px_rgba(6,78,59,0.08)]">
+      <div className="overflow-hidden rounded-[18px] border border-lime-200/70 bg-linear-to-r from-[#fff8e7] via-white to-[#f1f5fc] px-4 py-3 shadow-[0_10px_24px_rgba(6,78,59,0.07)]">
         <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-orange-100 text-orange-500">
-            <Zap className="h-5 w-5" />
+          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-500">
+            <Zap className="h-[18px] w-[18px]" />
           </div>
           <div>
-            <p className="text-sm font-black text-[#12316b]">Transaksi makin praktis</p>
+            <p className="text-[13px] font-black text-[#12316b]">Transaksi makin praktis</p>
             <p className="mt-0.5 text-[11px] font-semibold text-slate-500">Pilih layanan, isi data, lalu selesaikan pembayaran.</p>
           </div>
         </div>
@@ -301,34 +301,34 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
         filteredGroups.map((group) => (
           <div
             key={group.id}
-            className="overflow-hidden rounded-[26px] border border-emerald-950/[0.08] bg-white p-4 shadow-[0_14px_34px_rgba(6,78,59,0.08)]"
+            className="overflow-hidden rounded-[20px] border border-emerald-950/[0.08] bg-white p-3.5 shadow-[0_12px_28px_rgba(6,78,59,0.07)]"
           >
-            <div className="mb-4 flex items-center gap-2">
-              <h2 className="text-[17px] font-black tracking-tight text-slate-950">{group.title}</h2>
-              <span className="rounded-full bg-lime-100 px-2 py-1 text-[10px] font-black text-[#185adb]">
+            <div className="mb-3 flex items-center gap-2">
+              <h2 className="text-[16px] font-black tracking-tight text-slate-950">{group.title}</h2>
+              <span className="rounded-full bg-lime-100 px-2 py-0.5 text-[9px] font-black text-[#185adb]">
                 {group.items.length} layanan
               </span>
             </div>
 
-            <div className="grid grid-cols-4 gap-x-2 gap-y-5">
+            <div className="grid grid-cols-4 gap-x-1.5 gap-y-4">
               {group.items.map((item) => {
                 return (
                   <Link
                     key={`${group.id}-${item.label}`}
                     href={item.href}
                     prefetch={false}
-                    className="group flex min-h-[82px] flex-col items-center justify-start gap-2 text-center"
+                    className="group flex min-h-[76px] flex-col items-center justify-start gap-1.5 text-center"
                   >
-                    <span className="relative grid h-14 w-14 place-items-center overflow-hidden rounded-[20px] bg-white shadow-[0_12px_24px_rgba(6,78,59,0.12)] ring-1 ring-slate-200/80 transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_16px_30px_rgba(6,78,59,0.18)]">
+                    <span className="relative grid h-12 w-12 place-items-center overflow-hidden rounded-[16px] bg-white shadow-[0_10px_20px_rgba(6,78,59,0.10)] ring-1 ring-slate-200/80 transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_26px_rgba(6,78,59,0.15)]">
                       <Image
                         src={item.iconSrc}
                         alt=""
                         fill
-                        sizes="56px"
+                        sizes="48px"
                         className="object-contain p-0.5"
                       />
                     </span>
-                    <span className="line-clamp-2 max-w-[76px] text-[10px] font-black leading-tight text-slate-950">
+                    <span className="line-clamp-2 max-w-[68px] text-[9.5px] font-black leading-tight text-slate-950">
                       {item.label}
                     </span>
                   </Link>
@@ -338,7 +338,7 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
           </div>
         ))
       ) : (
-        <div className="rounded-[26px] border border-dashed border-emerald-200 bg-white p-8 text-center shadow-[0_14px_34px_rgba(6,78,59,0.08)]">
+        <div className="rounded-[20px] border border-dashed border-emerald-200 bg-white p-7 text-center shadow-[0_12px_28px_rgba(6,78,59,0.07)]">
           <BookOpen className="mx-auto h-8 w-8 text-[#185adb]" />
           <p className="mt-3 text-sm font-black text-slate-900">Layanan tidak ditemukan</p>
           <p className="mt-1 text-xs font-semibold text-slate-500">Coba kata kunci yang lebih singkat.</p>
@@ -348,7 +348,7 @@ export function ServiceDirectory({ mode = "guest", role }: ServiceDirectoryProps
       <Link
         href={mode === "user" ? "/user" : "/"}
         prefetch={false}
-        className="group flex items-center justify-between rounded-[24px] border border-emerald-300/30 bg-[#12316b] px-4 py-4 text-white shadow-[0_16px_34px_rgba(5,46,38,0.22)]"
+        className="group flex items-center justify-between rounded-[20px] border border-emerald-300/30 bg-[#12316b] px-4 py-3.5 text-white shadow-[0_14px_28px_rgba(5,46,38,0.20)]"
       >
         <span>
           <span className="block text-sm font-black !text-white">Kembali ke beranda</span>
