@@ -103,13 +103,14 @@ jobs:
           FRONTEND_RELEASE_DIR: ${{ secrets.FRONTEND_RELEASE_DIR }}
           BACKEND_RESTART_COMMAND: ${{ secrets.BACKEND_RESTART_COMMAND }}
           FRONTEND_RESTART_COMMAND: ${{ secrets.FRONTEND_RESTART_COMMAND }}
+          FRONTEND_PORT: ${{ secrets.FRONTEND_PORT || '3101' }}
           DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
         run: |
           SUDO_PASSWORD_B64="$(printf '%s' "$SSHPASS" | base64 -w 0)"
           BACKEND_RESTART_COMMAND_B64="$(printf '%s' "$BACKEND_RESTART_COMMAND" | base64 -w 0)"
           FRONTEND_RESTART_COMMAND_B64="$(printf '%s' "$FRONTEND_RESTART_COMMAND" | base64 -w 0)"
           sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" \
-            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' DEPLOY_TMP='$DEPLOY_TMP' SUDO_PASSWORD_B64='$SUDO_PASSWORD_B64' BACKEND_RESTART_COMMAND_B64='$BACKEND_RESTART_COMMAND_B64' FRONTEND_RESTART_COMMAND_B64='$FRONTEND_RESTART_COMMAND_B64' bash -s" <<'REMOTE'
+            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' FRONTEND_PORT='$FRONTEND_PORT' DEPLOY_TMP='$DEPLOY_TMP' SUDO_PASSWORD_B64='$SUDO_PASSWORD_B64' BACKEND_RESTART_COMMAND_B64='$BACKEND_RESTART_COMMAND_B64' FRONTEND_RESTART_COMMAND_B64='$FRONTEND_RESTART_COMMAND_B64' bash -s" <<'REMOTE'
           set -euo pipefail
 
           sudo_with_password() {
@@ -210,8 +211,14 @@ jobs:
             echo "Restarting frontend..."
             bash -lc "$FRONTEND_RESTART_COMMAND"
           elif command -v pm2 >/dev/null 2>&1; then
-            echo "FRONTEND_RESTART_COMMAND is empty. Restarting all PM2 processes..."
-            pm2 restart all --update-env
+            echo "FRONTEND_RESTART_COMMAND is empty. Starting frontend from release directory with PM2..."
+            pm2 delete dayaklik-fe 2>/dev/null || true
+            if command -v fuser >/dev/null 2>&1; then
+              fuser -k "${FRONTEND_PORT}/tcp" 2>/dev/null || true
+            fi
+            cd "$FRONTEND_RELEASE_DIR"
+            PORT="$FRONTEND_PORT" HOSTNAME=127.0.0.1 pm2 start server.js --name dayaklik-fe --update-env
+            pm2 save || true
           else
             echo "FRONTEND_RESTART_COMMAND is empty and PM2 was not found."
             sudo_with_password systemctl restart dayaklik-fe 2>/dev/null || true
