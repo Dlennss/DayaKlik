@@ -1,36 +1,48 @@
 "use client";
 
 import Link from "next/link";
+import {
+  Bell,
+  ChevronDown,
+  ChevronRight,
+  ClipboardList,
+  EyeOff,
+  Home,
+  Plus,
+  QrCode,
+  ReceiptText,
+  Send,
+  Tag,
+  UserRound,
+} from "lucide-react";
 
-const dashboardImage = "/dayaklik-assets/01_bagian_utama/dashboard_lengkap.png";
+const asset = (path: string) => `/dayaklik-assets/${path}`;
 
-const hotspots = [
-  { label: "Isi Saldo", href: "/login", className: "left-[6%] top-[18.5%] h-[4.7%] w-[19%]" },
-  { label: "Kirim", href: "/login", className: "left-[27%] top-[18.5%] h-[4.7%] w-[15%]" },
-  { label: "Riwayat Saldo", href: "/transaksi", className: "left-[44%] top-[18.5%] h-[4.7%] w-[16%]" },
-  { label: "Member", href: "/login", className: "left-[65%] top-[10.6%] h-[5.8%] w-[29%]" },
-  { label: "Poin", href: "/promo", className: "left-[65%] top-[16.2%] h-[7.4%] w-[29%]" },
-  { label: "Transaksi Sekarang", href: "/kategori", className: "left-[3%] top-[25.5%] h-[19.5%] w-[94%]" },
-  { label: "Lihat Semua Layanan", href: "/kategori", className: "left-[77%] top-[48.1%] h-[3.5%] w-[18%]" },
-  { label: "Pulsa", href: "/pulsa", className: "left-[5%] top-[51%] h-[9.5%] w-[15%]" },
-  { label: "Paket Data", href: "/paket-data", className: "left-[24%] top-[51%] h-[9.5%] w-[15%]" },
-  { label: "Token Listrik", href: "/listrik/token", className: "left-[42%] top-[51%] h-[9.5%] w-[15%]" },
-  { label: "E-Wallet", href: "/ewallet", className: "left-[61%] top-[51%] h-[9.5%] w-[15%]" },
-  { label: "PPOB", href: "/kategori", className: "left-[80%] top-[51%] h-[9.5%] w-[15%]" },
-  { label: "Voucher Game", href: "/game", className: "left-[5%] top-[62%] h-[9.5%] w-[15%]" },
-  { label: "Telkom Internet", href: "/internet-pascabayar", className: "left-[24%] top-[62%] h-[9.5%] w-[15%]" },
-  { label: "TV Berlangganan", href: "/tv", className: "left-[42%] top-[62%] h-[9.5%] w-[15%]" },
-  { label: "PDAM", href: "/pdam", className: "left-[61%] top-[62%] h-[9.5%] w-[15%]" },
-  { label: "Lainnya", href: "/kategori", className: "left-[80%] top-[62%] h-[9.5%] w-[15%]" },
-  { label: "Lihat Semua Promo", href: "/promo", className: "left-[77%] top-[75.6%] h-[3.5%] w-[18%]" },
-  { label: "Promo Cashback", href: "/promo", className: "left-[4%] top-[78.5%] h-[10.5%] w-[31%]" },
-  { label: "Promo Harga Terbaik", href: "/promo", className: "left-[36%] top-[78.5%] h-[10.5%] w-[29%]" },
-  { label: "Promo Hemat", href: "/promo", className: "left-[67%] top-[78.5%] h-[10.5%] w-[29%]" },
-  { label: "Beranda", href: "/", className: "left-[5%] top-[91.5%] h-[7%] w-[17%]" },
-  { label: "Transaksi", href: "/transaksi", className: "left-[25%] top-[91.5%] h-[7%] w-[17%]" },
-  { label: "Scan", href: "/kategori", className: "left-[43%] top-[89.5%] h-[9%] w-[15%]" },
-  { label: "Promo", href: "/promo", className: "left-[63%] top-[91.5%] h-[7%] w-[17%]" },
-  { label: "Akun", href: "/login", className: "left-[80%] top-[91.5%] h-[7%] w-[17%]" },
+const services = [
+  { label: "Pulsa", href: "/pulsa", icon: "06_layanan/icon_tile/pulsa_tile.png" },
+  { label: "Paket Data", href: "/paket-data", icon: "06_layanan/icon_tile/paket_data_tile.png" },
+  { label: "Token Listrik", href: "/listrik/token", icon: "06_layanan/icon_tile/token_listrik_tile.png" },
+  { label: "E-Wallet", href: "/ewallet", icon: "06_layanan/icon_tile/e_wallet_tile.png" },
+  { label: "PPOB", href: "/kategori", icon: "06_layanan/icon_tile/ppob_tile.png" },
+  { label: "Voucher Game", href: "/game", icon: "06_layanan/icon_tile/voucher_game_tile.png" },
+  { label: "Telkom & Internet", href: "/internet-pascabayar", icon: "06_layanan/icon_tile/telkom_dan_internet_tile.png" },
+  { label: "TV Berlangganan", href: "/tv", icon: "06_layanan/icon_tile/tv_berlangganan_tile.png" },
+  { label: "PDAM", href: "/pdam", icon: "06_layanan/icon_tile/pdam_tile.png" },
+  { label: "Lainnya", href: "/kategori", icon: "06_layanan/icon_tile/lainnya_tile.png" },
+];
+
+const promos = [
+  { label: "Cashback hingga 10%", href: "/promo", image: "07_promo/kartu/cashback_hingga_10_persen.png" },
+  { label: "Harga terbaik setiap hari", href: "/promo", image: "07_promo/kartu/harga_terbaik_setiap_hari.png" },
+  { label: "Transaksi lebih hemat", href: "/promo", image: "07_promo/kartu/transaksi_lebih_hemat.png" },
+];
+
+const navItems = [
+  { label: "Beranda", href: "/", icon: Home, active: true },
+  { label: "Transaksi", href: "/transaksi", icon: ClipboardList },
+  { label: "Scan", href: "/kategori", icon: QrCode, center: true },
+  { label: "Promo", href: "/promo", icon: Tag },
+  { label: "Akun", href: "/login", icon: UserRound },
 ];
 
 type DayaKlikAppHomeProps = {
@@ -54,30 +66,160 @@ function getHref(href: string, isLoggedIn: boolean) {
   return userRoutes[href] || href;
 }
 
+function SectionHeading({ title, href }: { title: string; href: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <h2 className="text-[17px] font-black leading-none text-[#071d55]">{title}</h2>
+      <Link href={href} prefetch={false} className="inline-flex items-center gap-1 text-[12px] font-black text-[#075dff]">
+        Lihat Semua
+        <ChevronRight className="h-3.5 w-3.5" strokeWidth={3} />
+      </Link>
+    </div>
+  );
+}
+
 export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
   return (
     <div className="min-h-dvh bg-[#eef6ff] text-[#071d55]">
-      <div className="mx-auto w-full max-w-[512px]">
-        <div className="relative">
-          <img
-            src={dashboardImage}
-            alt="DayaKlik"
-            className="block h-auto w-full select-none"
-            draggable={false}
-          />
-          {hotspots.map((item) => {
-            const href = getHref(item.href, isLoggedIn);
-            return (
+      <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)]">
+        <header className="relative overflow-hidden bg-[#075dff] px-5 pb-7 pt-4 text-white">
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_54%,#0043bd_100%)]" />
+          <div className="absolute left-[46%] top-0 h-full w-24 rotate-12 bg-white/8" />
+
+          <div className="relative flex items-center justify-between gap-3">
+            <Link href={isLoggedIn ? "/user" : "/"} prefetch={false} aria-label="DayaKlik">
+              <img src={asset("02_logo_brand/logo_lengkap_transparan.png")} alt="DayaKlik" className="h-[52px] w-auto" />
+            </Link>
+
+            <div className="flex items-center gap-2">
               <Link
-                key={`${item.label}-${item.href}`}
-                href={href}
+                href={getHref("/transaksi", isLoggedIn)}
                 prefetch={false}
-                aria-label={item.label}
-                className={`absolute rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 ${item.className}`}
-              />
-            );
-          })}
-        </div>
+                aria-label="Notifikasi"
+                className="relative grid h-10 w-10 place-items-center rounded-[11px] border border-white/25 bg-white/12 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]"
+              >
+                <Bell className="h-5 w-5" strokeWidth={2.4} />
+                <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-[#ff4966] ring-2 ring-[#1c79ff]" />
+              </Link>
+              <Link href={getHref("/login", isLoggedIn)} prefetch={false} className="flex items-center gap-1.5">
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-white/20">
+                  <UserRound className="h-6 w-6" strokeWidth={2.4} />
+                </span>
+                <span className="hidden min-[360px]:block">
+                  <span className="block text-[11px] font-semibold leading-none">Halo,</span>
+                  <span className="mt-1 flex items-center gap-1 text-[16px] font-black leading-none">
+                    User
+                    <ChevronDown className="h-4 w-4" strokeWidth={3} />
+                  </span>
+                </span>
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        <main className="-mt-4 space-y-3 px-3 pb-28">
+          <section className="rounded-[20px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
+            <div className="flex items-center gap-2 text-[14px] font-semibold text-[#1b3f7d]">
+              Saldo Utama
+              <EyeOff className="h-4 w-4 text-[#7d91b6]" strokeWidth={2.4} />
+            </div>
+            <div className="mt-2 text-[34px] font-black leading-none tracking-normal text-[#071d55]">Rp 125.000</div>
+
+            <div className="mt-5 grid grid-cols-3 gap-2.5">
+              <Link
+                href={getHref("/login", isLoggedIn)}
+                prefetch={false}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] bg-[#075dff] px-2 text-[12px] font-black text-white shadow-[0_10px_18px_rgba(0,93,255,0.25)]"
+              >
+                <Plus className="h-5 w-5 rounded-full bg-white text-[#075dff]" strokeWidth={3} />
+                Isi Saldo
+              </Link>
+              <Link
+                href={getHref("/login", isLoggedIn)}
+                prefetch={false}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
+              >
+                <Send className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.6} />
+                Kirim
+              </Link>
+              <Link
+                href={getHref("/transaksi", isLoggedIn)}
+                prefetch={false}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
+              >
+                <ReceiptText className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.5} />
+                Riwayat
+              </Link>
+            </div>
+          </section>
+
+          <Link
+            href={getHref("/kategori", isLoggedIn)}
+            prefetch={false}
+            className="block overflow-hidden rounded-[18px] shadow-[0_12px_28px_rgba(4,54,125,0.16)]"
+            aria-label="Transaksi sekarang"
+          >
+            <img src={asset("05_banner_utama/banner_utama.png")} alt="Semua kebutuhan dalam satu aplikasi" className="block h-auto w-full" />
+          </Link>
+
+          <section className="rounded-[20px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
+            <SectionHeading title="Semua Layanan" href={getHref("/kategori", isLoggedIn)} />
+            <div className="mt-4 grid grid-cols-5 gap-x-2 gap-y-4">
+              {services.map((item) => (
+                <Link key={item.label} href={getHref(item.href, isLoggedIn)} prefetch={false} className="group flex min-w-0 flex-col items-center gap-1.5 text-center">
+                  <img src={asset(item.icon)} alt="" className="aspect-square w-full max-w-[54px] object-contain transition group-hover:scale-105" />
+                  <span className="min-h-[28px] text-[10.5px] font-bold leading-tight text-[#071d55]">{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-[20px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
+            <SectionHeading title="Promo Spesial" href={getHref("/promo", isLoggedIn)} />
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {promos.map((item) => (
+                <Link key={item.label} href={getHref(item.href, isLoggedIn)} prefetch={false} className="block overflow-hidden rounded-[12px]">
+                  <img src={asset(item.image)} alt={item.label} className="block h-auto w-full" />
+                </Link>
+              ))}
+            </div>
+          </section>
+        </main>
+
+        <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[390px] px-3 pb-3">
+          <div className="rounded-[24px] border border-white/80 bg-white/95 px-3 py-2 shadow-[0_-8px_30px_rgba(7,29,85,0.12)] backdrop-blur">
+          <div className="grid grid-cols-5 items-end gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const href = getHref(item.href, isLoggedIn);
+              return (
+                <Link
+                  key={item.label}
+                  href={href}
+                  prefetch={false}
+                  aria-label={item.label}
+                  className={item.center ? "relative -mt-8 flex flex-col items-center gap-1 text-[#0c57e9]" : "flex flex-col items-center gap-1 text-[#264c83]"}
+                >
+                  <span
+                    className={
+                      item.center
+                        ? "grid h-14 w-14 place-items-center rounded-full bg-[#1183ff] text-white shadow-[0_10px_24px_rgba(17,131,255,0.35)] ring-4 ring-[#eef6ff]"
+                        : item.active
+                          ? "grid h-10 w-full place-items-center rounded-[12px] bg-[#eaf3ff] text-[#075dff]"
+                          : "grid h-10 w-full place-items-center text-[#8da0bd]"
+                    }
+                  >
+                    <Icon className={item.center ? "h-6 w-6" : "h-5 w-5"} strokeWidth={item.active || item.center ? 2.7 : 2.2} />
+                  </span>
+                  <span className={item.center ? "text-[11px] font-bold" : item.active ? "text-[11px] font-black text-[#075dff]" : "text-[11px] font-bold text-[#8da0bd]"}>
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          </div>
+        </nav>
       </div>
     </div>
   );
