@@ -47,6 +47,8 @@ const navItems = [
 
 type DayaKlikAppHomeProps = {
   isLoggedIn?: boolean;
+  userName?: string | null;
+  saldo?: number | null;
 };
 
 function getHref(href: string, isLoggedIn: boolean) {
@@ -78,7 +80,19 @@ function SectionHeading({ title, href }: { title: string; href: string }) {
   );
 }
 
-export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
+function formatIDR(value: number) {
+  return `Rp ${Math.max(0, Math.floor(value || 0)).toLocaleString("id-ID")}`;
+}
+
+function displayName(name?: string | null) {
+  const clean = String(name || "").trim();
+  if (!clean) return "Akun";
+  return clean.split(/\s+/)[0] || "Akun";
+}
+
+export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: DayaKlikAppHomeProps) {
+  const shownName = displayName(userName);
+
   return (
     <div className="min-h-dvh overflow-x-hidden bg-[#eef6ff] text-[#071d55]">
       <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)] sm:my-3 sm:rounded-[28px]">
@@ -106,9 +120,9 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
                   <UserRound className="h-6 w-6" strokeWidth={2.4} />
                 </span>
                 <span className="hidden min-[360px]:block">
-                  <span className="block text-[11px] font-semibold leading-none">Halo,</span>
+                  {isLoggedIn ? <span className="block text-[11px] font-semibold leading-none">Halo,</span> : null}
                   <span className="mt-1 flex items-center gap-1 text-[16px] font-black leading-none">
-                    User
+                    {isLoggedIn ? shownName : "Masuk"}
                     <ChevronDown className="h-4 w-4" strokeWidth={3} />
                   </span>
                 </span>
@@ -118,40 +132,42 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
         </header>
 
         <main className="-mt-4 space-y-3 px-4 pb-28">
-          <section className="rounded-[18px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
-            <div className="flex items-center gap-2 text-[14px] font-semibold text-[#1b3f7d]">
-              Saldo Utama
-              <EyeOff className="h-4 w-4 text-[#7d91b6]" strokeWidth={2.4} />
-            </div>
-            <div className="mt-2 text-[34px] font-black leading-none tracking-normal text-[#071d55]">Rp 125.000</div>
+          {isLoggedIn ? (
+            <section className="rounded-[18px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
+              <div className="flex items-center gap-2 text-[14px] font-semibold text-[#1b3f7d]">
+                Saldo Utama
+                <EyeOff className="h-4 w-4 text-[#7d91b6]" strokeWidth={2.4} />
+              </div>
+              <div className="mt-2 text-[34px] font-black leading-none tracking-normal text-[#071d55]">{formatIDR(Number(saldo || 0))}</div>
 
-            <div className="mt-5 grid grid-cols-3 gap-2.5">
-              <Link
-                href={getHref("/login", isLoggedIn)}
-                prefetch={false}
-                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] bg-[#075dff] px-2 text-[12px] font-black text-white shadow-[0_10px_18px_rgba(0,93,255,0.25)]"
-              >
-                <Plus className="h-5 w-5 rounded-full bg-white text-[#075dff]" strokeWidth={3} />
-                Isi Saldo
-              </Link>
-              <Link
-                href={getHref("/login", isLoggedIn)}
-                prefetch={false}
-                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
-              >
-                <Send className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.6} />
-                Kirim
-              </Link>
-              <Link
-                href={getHref("/transaksi", isLoggedIn)}
-                prefetch={false}
-                className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
-              >
-                <ReceiptText className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.5} />
-                Riwayat
-              </Link>
-            </div>
-          </section>
+              <div className="mt-5 grid grid-cols-3 gap-2.5">
+                <Link
+                  href="/user/account/topup"
+                  prefetch={false}
+                  className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] bg-[#075dff] px-2 text-[12px] font-black text-white shadow-[0_10px_18px_rgba(0,93,255,0.25)]"
+                >
+                  <Plus className="h-5 w-5 rounded-full bg-white text-[#075dff]" strokeWidth={3} />
+                  Isi Saldo
+                </Link>
+                <Link
+                  href="/user/saldo/kirim"
+                  prefetch={false}
+                  className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
+                >
+                  <Send className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.6} />
+                  Kirim
+                </Link>
+                <Link
+                  href="/user/transaksi"
+                  prefetch={false}
+                  className="flex h-11 items-center justify-center gap-1.5 rounded-[13px] border border-[#d8e6fb] bg-white px-2 text-[12px] font-black text-[#082966] shadow-[0_8px_16px_rgba(6,47,111,0.06)]"
+                >
+                  <ReceiptText className="h-[18px] w-[18px] text-[#075dff]" strokeWidth={2.5} />
+                  Riwayat
+                </Link>
+              </div>
+            </section>
+          ) : null}
 
           <Link
             href={getHref("/kategori", isLoggedIn)}

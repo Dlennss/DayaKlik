@@ -2,6 +2,7 @@ import Script from "next/script";
 import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 import { authOptions } from "@/lib/nextauth";
+import { getUserProfile } from "@/lib/api.auth";
 import type { UserSession } from "@/components/user/types";
 import { DayaKlikAppHome } from "@/components/guest/DayaKlikAppHome";
 import { CANONICAL_SITE_URL } from "@/lib/seo-articles";
@@ -67,6 +68,8 @@ export const metadata: Metadata = {
 
 export default async function GuestHomePage() {
   const session = (await getServerSession(authOptions)) as SessionShape | null;
+  const profile = session?.backendToken ? await getUserProfile(session.backendToken).catch(() => null) : null;
+  const userName = profile?.nama || session?.user?.name || session?.user?.email || null;
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
@@ -153,7 +156,7 @@ export default async function GuestHomePage() {
       <Script id="homepage-faq-jsonld" type="application/ld+json">
         {JSON.stringify(faqJsonLd)}
       </Script>
-      <DayaKlikAppHome isLoggedIn={!!session?.backendToken} />
+      <DayaKlikAppHome isLoggedIn={!!session?.backendToken} userName={userName} saldo={Number(profile?.saldo || 0)} />
     </main>
   );
 }
