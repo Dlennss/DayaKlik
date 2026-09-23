@@ -127,14 +127,25 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                   <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-[#ff4966] ring-2 ring-[#1c79ff]" />
                 </Link>
               ) : null}
-              <Link
-                href={getHref("/login", isLoggedIn)}
-                prefetch={false}
-                className="inline-flex h-10 min-w-[86px] items-center justify-center gap-1 rounded-full bg-white px-4 text-[13px] font-black leading-none text-[#075dff] shadow-[0_10px_22px_rgba(0,42,130,0.18)]"
-              >
-                {isLoggedIn ? shownName : "Masuk"}
-                <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
-              </Link>
+              {isLoggedIn ? (
+                <Link
+                  href="/user/account"
+                  prefetch={false}
+                  className="inline-flex h-10 max-w-[98px] items-center justify-center gap-1 rounded-full bg-white/14 px-3 text-[13px] font-black leading-none text-white ring-1 ring-white/20"
+                >
+                  <span className="truncate">{shownName}</span>
+                  <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  prefetch={false}
+                  className="grid h-10 min-w-[86px] place-items-center rounded-full bg-white px-5 text-sm font-black leading-none shadow-[0_10px_22px_rgba(0,42,130,0.18)]"
+                  style={{ color: "#075dff" }}
+                >
+                  <span>Masuk</span>
+                </Link>
+              )}
             </div>
           </div>
         </header>
