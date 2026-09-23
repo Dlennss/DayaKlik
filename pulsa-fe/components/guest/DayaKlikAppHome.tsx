@@ -80,9 +80,9 @@ function SectionHeading({ title, href }: { title: string; href: string }) {
 
 export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
   return (
-    <div className="min-h-dvh bg-[#eef6ff] text-[#071d55]">
-      <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)]">
-        <header className="relative overflow-hidden bg-[#075dff] px-5 pb-7 pt-4 text-white">
+    <div className="min-h-dvh overflow-x-hidden bg-[#eef6ff] text-[#071d55]">
+      <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)] sm:my-3 sm:rounded-[28px]">
+        <header className="relative overflow-hidden bg-[#075dff] px-4 pb-7 pt-4 text-white">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_54%,#0043bd_100%)]" />
           <div className="absolute left-[46%] top-0 h-full w-24 rotate-12 bg-white/8" />
 
@@ -117,8 +117,8 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
           </div>
         </header>
 
-        <main className="-mt-4 space-y-3 px-3 pb-28">
-          <section className="rounded-[20px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
+        <main className="-mt-4 space-y-3 px-4 pb-28">
+          <section className="rounded-[18px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
             <div className="flex items-center gap-2 text-[14px] font-semibold text-[#1b3f7d]">
               Saldo Utama
               <EyeOff className="h-4 w-4 text-[#7d91b6]" strokeWidth={2.4} />
@@ -156,13 +156,13 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
           <Link
             href={getHref("/kategori", isLoggedIn)}
             prefetch={false}
-            className="block overflow-hidden rounded-[18px] shadow-[0_12px_28px_rgba(4,54,125,0.16)]"
+            className="block overflow-hidden rounded-[18px] shadow-[0_12px_28px_rgba(4,54,125,0.16)] ring-1 ring-white/80"
             aria-label="Transaksi sekarang"
           >
             <img src={asset("05_banner_utama/banner_utama.png")} alt="Semua kebutuhan dalam satu aplikasi" className="block h-auto w-full" />
           </Link>
 
-          <section className="rounded-[20px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
+          <section className="rounded-[18px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
             <SectionHeading title="Semua Layanan" href={getHref("/kategori", isLoggedIn)} />
             <div className="mt-4 grid grid-cols-5 gap-x-2 gap-y-4">
               {services.map((item) => (
@@ -174,7 +174,7 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
             </div>
           </section>
 
-          <section className="rounded-[20px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
+          <section className="rounded-[18px] border border-white/80 bg-white p-4 shadow-[0_10px_28px_rgba(11,48,99,0.08)]">
             <SectionHeading title="Promo Spesial" href={getHref("/promo", isLoggedIn)} />
             <div className="mt-4 grid grid-cols-3 gap-2">
               {promos.map((item) => (
@@ -186,38 +186,38 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
           </section>
         </main>
 
-        <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[390px] px-3 pb-3">
+        <nav className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 px-4 pb-3">
           <div className="rounded-[24px] border border-white/80 bg-white/95 px-3 py-2 shadow-[0_-8px_30px_rgba(7,29,85,0.12)] backdrop-blur">
-          <div className="grid grid-cols-5 items-end gap-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const href = getHref(item.href, isLoggedIn);
-              return (
-                <Link
-                  key={item.label}
-                  href={href}
-                  prefetch={false}
-                  aria-label={item.label}
-                  className={item.center ? "relative -mt-8 flex flex-col items-center gap-1 text-[#0c57e9]" : "flex flex-col items-center gap-1 text-[#264c83]"}
-                >
-                  <span
-                    className={
-                      item.center
-                        ? "grid h-14 w-14 place-items-center rounded-full bg-[#1183ff] text-white shadow-[0_10px_24px_rgba(17,131,255,0.35)] ring-4 ring-[#eef6ff]"
-                        : item.active
-                          ? "grid h-10 w-full place-items-center rounded-[12px] bg-[#eaf3ff] text-[#075dff]"
-                          : "grid h-10 w-full place-items-center text-[#8da0bd]"
-                    }
+            <div className="grid grid-cols-5 items-end gap-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const href = getHref(item.href, isLoggedIn);
+                return (
+                  <Link
+                    key={item.label}
+                    href={href}
+                    prefetch={false}
+                    aria-label={item.label}
+                    className={item.center ? "relative -mt-8 flex flex-col items-center gap-1 text-[#0c57e9]" : "flex flex-col items-center gap-1 text-[#264c83]"}
                   >
-                    <Icon className={item.center ? "h-6 w-6" : "h-5 w-5"} strokeWidth={item.active || item.center ? 2.7 : 2.2} />
-                  </span>
-                  <span className={item.center ? "text-[11px] font-bold" : item.active ? "text-[11px] font-black text-[#075dff]" : "text-[11px] font-bold text-[#8da0bd]"}>
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+                    <span
+                      className={
+                        item.center
+                          ? "grid h-14 w-14 place-items-center rounded-full bg-[#1183ff] text-white shadow-[0_10px_24px_rgba(17,131,255,0.35)] ring-4 ring-[#eef6ff]"
+                          : item.active
+                            ? "grid h-10 w-full place-items-center rounded-[12px] bg-[#eaf3ff] text-[#075dff]"
+                            : "grid h-10 w-full place-items-center text-[#8da0bd]"
+                      }
+                    >
+                      <Icon className={item.center ? "h-6 w-6" : "h-5 w-5"} strokeWidth={item.active || item.center ? 2.7 : 2.2} />
+                    </span>
+                    <span className={item.center ? "text-[11px] font-bold" : item.active ? "text-[11px] font-black text-[#075dff]" : "text-[11px] font-bold text-[#8da0bd]"}>
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </nav>
       </div>
