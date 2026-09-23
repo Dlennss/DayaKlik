@@ -106,10 +106,44 @@ jobs:
             "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' DEPLOY_TMP='$DEPLOY_TMP' bash -s" <<'REMOTE'
           set -euo pipefail
 
+          if [ -z "$BACKEND_SOURCE_DIR" ] || [ -z "$FRONTEND_RELEASE_DIR" ]; then
+            echo "BACKEND_SOURCE_DIR and FRONTEND_RELEASE_DIR must be set."
+            exit 1
+          fi
+
+          case "$BACKEND_SOURCE_DIR" in
+            /*) ;;
+            *) echo "BACKEND_SOURCE_DIR must be an absolute path."; exit 1 ;;
+          esac
+
+          case "$FRONTEND_RELEASE_DIR" in
+            /*) ;;
+            *) echo "FRONTEND_RELEASE_DIR must be an absolute path."; exit 1 ;;
+          esac
+
           mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
 
-          tar -xzf "$DEPLOY_TMP/backend-release.tar.gz" -C "$BACKEND_SOURCE_DIR"
-          tar -xzf "$DEPLOY_TMP/frontend-release.tar.gz" -C "$FRONTEND_RELEASE_DIR"
+          if [ ! -w "$BACKEND_SOURCE_DIR" ] || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
+            echo "Deploy directories are not writable by $USER."
+            echo "Fix ownership on the server, for example:"
+            echo "  sudo chown -R $USER:$USER '$BACKEND_SOURCE_DIR' '$FRONTEND_RELEASE_DIR'"
+            exit 1
+          fi
+
+          BACKEND_EXTRACT="$DEPLOY_TMP/backend"
+          FRONTEND_EXTRACT="$DEPLOY_TMP/frontend"
+          mkdir -p "$BACKEND_EXTRACT" "$FRONTEND_EXTRACT"
+
+          tar --extract --gzip --file "$DEPLOY_TMP/backend-release.tar.gz" --directory "$BACKEND_EXTRACT" --no-same-owner --no-same-permissions --touch
+          tar --extract --gzip --file "$DEPLOY_TMP/frontend-release.tar.gz" --directory "$FRONTEND_EXTRACT" --no-same-owner --no-same-permissions --touch
+
+          chmod -R u+w "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR" 2>/dev/null || true
+
+          find "$BACKEND_SOURCE_DIR" -mindepth 1 ! -name ".env" -exec rm -rf {} +
+          find "$FRONTEND_RELEASE_DIR" -mindepth 1 ! -name ".env" ! -name ".env.local" -exec rm -rf {} +
+
+          cp -a "$BACKEND_EXTRACT"/. "$BACKEND_SOURCE_DIR"/
+          cp -a "$FRONTEND_EXTRACT"/. "$FRONTEND_RELEASE_DIR"/
 
           chmod +x "$BACKEND_SOURCE_DIR/pulsa2"
           rm -rf "$DEPLOY_TMP"
