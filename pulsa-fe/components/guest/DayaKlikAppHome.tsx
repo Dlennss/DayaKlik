@@ -40,7 +40,7 @@ const promos = [
 const navItems = [
   { label: "Beranda", href: "/", icon: Home, active: true },
   { label: "Transaksi", href: "/transaksi", icon: ClipboardList },
-  { label: "Scan", href: "/kategori", icon: QrCode, center: true },
+  { label: "Scan", href: "/kategori", icon: QrCode },
   { label: "Promo", href: "/promo", icon: Tag },
   { label: "Akun", href: "/login", icon: UserRound },
 ];
@@ -198,20 +198,18 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
                     href={href}
                     prefetch={false}
                     aria-label={item.label}
-                    className={item.center ? "relative -mt-8 flex flex-col items-center gap-1 text-[#0c57e9]" : "flex flex-col items-center gap-1 text-[#264c83]"}
+                    className={item.active ? "flex flex-col items-center gap-1 text-[#075dff]" : "flex flex-col items-center gap-1 text-[#8da0bd]"}
                   >
                     <span
                       className={
-                        item.center
-                          ? "grid h-14 w-14 place-items-center rounded-full bg-[#1183ff] text-white shadow-[0_10px_24px_rgba(17,131,255,0.35)] ring-4 ring-[#eef6ff]"
-                          : item.active
-                            ? "grid h-10 w-full place-items-center rounded-[12px] bg-[#eaf3ff] text-[#075dff]"
-                            : "grid h-10 w-full place-items-center text-[#8da0bd]"
+                        item.active
+                          ? "grid h-10 min-w-12 place-items-center rounded-[13px] bg-[#eaf3ff] text-[#075dff]"
+                          : "grid h-10 min-w-12 place-items-center text-[#8da0bd]"
                       }
                     >
-                      <Icon className={item.center ? "h-6 w-6" : "h-5 w-5"} strokeWidth={item.active || item.center ? 2.7 : 2.2} />
+                      <Icon className="h-[22px] w-[22px]" strokeWidth={item.active ? 2.5 : 2} />
                     </span>
-                    <span className={item.center ? "text-[11px] font-bold" : item.active ? "text-[11px] font-black text-[#075dff]" : "text-[11px] font-bold text-[#8da0bd]"}>
+                    <span className={item.active ? "text-[12px] font-black text-[#075dff]" : "text-[12px] font-bold text-[#8da0bd]"}>
                       {item.label}
                     </span>
                   </Link>
