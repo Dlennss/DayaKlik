@@ -13,12 +13,11 @@
 }
 body { background: #f1f5fc; color: #20282c; font-family: Arial, sans-serif; }
 body * { letter-spacing: 0 !important; }
-.brand-app-header { background: #185adb; color: #ffffff; border-bottom: 3px solid #dfed79; box-shadow: 0 3px 14px #18232d08; }
-.brand-app-header > .pointer-events-none { display: none; }
+.brand-app-header { background: #185adb; color: #ffffff; border-bottom: 0; box-shadow: 0 10px 28px #075dff24; }
 .brand-app-header a { color: inherit; }
-.brand-app-header a[aria-label*="bantuan"] { color: inherit; border-color: #ffffff55; border-radius: 4px; }
+.brand-app-header a[aria-label*="bantuan"] { color: inherit; border-color: #ffffff55; border-radius: 12px; }
 .brand-app-header span.italic { font-style: normal; }
-.brand-app-header span[class*="text-[10px]"] { color: inherit; opacity: .8; }
+.brand-app-header span[class*="text-[9px]"], .brand-app-header span[class*="text-[10px]"] { color: inherit; opacity: .82; }
 .brand-wordmark { color: inherit; }
 .brand-auth-shell { background: #f1f5fc; border-top: 0; }
 .auth-card:not(.dayaklik-register-card) { border: 1px solid #dce4f2; border-radius: 4px !important; box-shadow: 0 12px 48px #18232d0d !important; }

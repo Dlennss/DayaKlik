@@ -22,28 +22,27 @@ export function AppTopHeader({ isLoggedIn = false, userName, saldo, role }: AppT
   if (pathname === "/" || pathname === "/user") return null;
 
   return (
-    <header className="brand-app-header sticky top-0 z-30 overflow-hidden bg-[#12316b] px-3 pb-3 pt-2 text-white shadow-[0_16px_34px_rgba(5,46,38,0.22)]">
-      <div className="pointer-events-none absolute -right-10 -top-14 h-32 w-32 rounded-full bg-lime-300/25 blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 left-20 h-20 w-40 rotate-[-10deg] bg-emerald-400/15 blur-2xl" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-lime-300/80 to-transparent" />
+    <header className="brand-app-header sticky top-0 z-30 overflow-hidden bg-[#075dff] px-4 py-3 text-white shadow-[0_10px_28px_rgba(7,93,255,0.16)]">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_58%,#0043bd_100%)]" />
+      <div className="pointer-events-none absolute left-[52%] top-0 h-full w-24 rotate-12 bg-white/7" />
 
-      <div className="relative flex h-14 items-center justify-between gap-3">
+      <div className="relative flex h-12 items-center justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-center">
           <Link
             href={homeHref}
             prefetch={false}
-            className="flex min-w-0 items-center gap-2.5"
+            className="flex min-w-0 items-center gap-2"
             aria-label="DayaKlik"
           >
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white shadow-[0_10px_22px_rgba(163,230,53,0.22)] ring-1 ring-lime-200/80">
-              <img src="/brand/icon.svg" alt="" width={40} height={40} className="h-10 w-10" />
+            <span className="grid h-11 w-11 shrink-0 place-items-center">
+              <img src="/dayaklik-assets/02_logo_brand/simbol_logo_transparan.png" alt="" width={44} height={44} className="h-11 w-11 object-contain drop-shadow-[0_8px_16px_rgba(0,35,112,0.22)]" />
             </span>
             <span className="min-w-0">
-              <span className="block text-[22px] font-black italic leading-5 tracking-tight">
-                <span className="brand-wordmark">DayaKlik</span>
+              <span className="block truncate text-[22px] font-black leading-none">
+                Daya<span className="text-[#dfff5d]">Klik</span>
               </span>
-              <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-lime-100/85">
-                Daya untuk harimu
+              <span className="mt-1 block truncate text-[9px] font-black uppercase leading-none text-white/82">
+                Daya Untuk Harimu
               </span>
             </span>
           </Link>
@@ -54,10 +53,10 @@ export function AppTopHeader({ isLoggedIn = false, userName, saldo, role }: AppT
             href="#"
             target="_blank"
             rel="noreferrer"
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-white/15 bg-white/10 text-lime-100 shadow-sm transition hover:bg-white/18"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-[12px] border border-white/35 bg-white/14 text-white shadow-sm transition hover:bg-white/20"
             aria-label="Hubungi bantuan via WhatsApp"
           >
-            <Headset className="h-4 w-4" />
+            <Headset className="h-[18px] w-[18px]" strokeWidth={2.3} />
           </a>
         </div>
       </div>
