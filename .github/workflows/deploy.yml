@@ -70,6 +70,7 @@ jobs:
           cp -R .next/static/. ../dist/frontend/.next/static/
           cp -R public ../dist/frontend/public
           cp .env-example ../dist/frontend/.env-example
+          printf '%s\n' "${GITHUB_SHA}" > ../dist/frontend/DEPLOYED_COMMIT.txt
 
       - name: Package release
         run: |
@@ -200,12 +201,23 @@ jobs:
             fi
           fi
 
+          FRONTEND_RESTART_COMMAND=""
           if [ -n "${FRONTEND_RESTART_COMMAND_B64:-}" ]; then
             FRONTEND_RESTART_COMMAND="$(printf '%s' "$FRONTEND_RESTART_COMMAND_B64" | base64 -d)"
-            if [ -n "$FRONTEND_RESTART_COMMAND" ]; then
-              echo "Restarting frontend..."
-              bash -lc "$FRONTEND_RESTART_COMMAND"
-            fi
+          fi
+
+          if [ -n "$FRONTEND_RESTART_COMMAND" ]; then
+            echo "Restarting frontend..."
+            bash -lc "$FRONTEND_RESTART_COMMAND"
+          elif command -v pm2 >/dev/null 2>&1; then
+            echo "FRONTEND_RESTART_COMMAND is empty. Restarting all PM2 processes..."
+            pm2 restart all --update-env
+          else
+            echo "FRONTEND_RESTART_COMMAND is empty and PM2 was not found."
+            sudo_with_password systemctl restart dayaklik-fe 2>/dev/null || true
+            sudo_with_password systemctl restart dayaklik-frontend 2>/dev/null || true
+            sudo_with_password systemctl restart sikouta-fe 2>/dev/null || true
+            sudo_with_password systemctl restart sikouta-frontend 2>/dev/null || true
           fi
 
           echo "Backend deployed to $BACKEND_SOURCE_DIR"
