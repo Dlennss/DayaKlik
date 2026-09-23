@@ -90,7 +90,18 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
         run: |
-          sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$DEPLOY_TMP'"
+          set -euo pipefail
+
+          if [ -z "${SSHPASS:-}" ] || [ -z "${SERVER_HOST:-}" ] || [ -z "${SERVER_PORT:-}" ] || [ -z "${SERVER_USER:-}" ]; then
+            echo "::error::SERVER_HOST, SERVER_PORT, SERVER_USER, and SERVER_PASSWORD secrets must be filled."
+            exit 1
+          fi
+
+          if ! sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$DEPLOY_TMP'"; then
+            echo "::error::SSH login failed. Check SERVER_USER, SERVER_HOST, SERVER_PORT, and especially SERVER_PASSWORD. SERVER_PASSWORD must be the SSH password for SERVER_USER, not the GitHub password."
+            exit 1
+          fi
+
           sshpass -e scp -o StrictHostKeyChecking=no -P "$SERVER_PORT" backend-release.tar.gz frontend-release.tar.gz "$SERVER_USER@$SERVER_HOST:$DEPLOY_TMP/"
 
       - name: Extract release on server
