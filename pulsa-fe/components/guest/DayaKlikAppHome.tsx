@@ -96,7 +96,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
   return (
     <div className="min-h-dvh overflow-x-hidden bg-[#eef6ff] text-[#071d55]">
       <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)] sm:my-3 sm:rounded-[28px]">
-        <header className="relative overflow-hidden bg-[#075dff] px-4 pb-5 pt-4 text-white">
+        <header className="relative mx-4 mt-4 overflow-hidden rounded-[18px] bg-[#075dff] px-4 pb-4 pt-4 text-white">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_54%,#0043bd_100%)]" />
           <div className="absolute left-[50%] top-0 h-full w-20 rotate-12 bg-white/7" />
 
@@ -149,7 +149,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
           </div>
         </header>
 
-        <main className="-mt-4 space-y-3 px-4 pb-28">
+        <main className="space-y-3 px-4 pb-28 pt-3">
           {isLoggedIn ? (
             <section className="rounded-[18px] border border-white/80 bg-white/96 p-4 shadow-[0_12px_34px_rgba(7,65,150,0.13)]">
               <div className="flex items-center gap-2 text-[14px] font-semibold text-[#1b3f7d]">
