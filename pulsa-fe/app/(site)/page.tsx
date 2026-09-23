@@ -2,9 +2,7 @@ import Script from "next/script";
 import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 import { authOptions } from "@/lib/nextauth";
-import { getCategories } from "@/lib/api.products";
-import type { UserCategoryItem, UserSession } from "@/components/user/types";
-import { GuestBottomNav } from "@/components/guest/GuestBottomNav";
+import type { UserSession } from "@/components/user/types";
 import { DayaKlikAppHome } from "@/components/guest/DayaKlikAppHome";
 import { CANONICAL_SITE_URL } from "@/lib/seo-articles";
 
@@ -16,6 +14,18 @@ type SessionShape = {
 const homeTitle = "DayaKlik | Pulsa, Paket Data, E-Wallet, Token Listrik, Game & PPOB";
 const homeDescription =
   "DayaKlik melayani isi pulsa, paket data, top up e-wallet, token listrik, top up game, dan pembayaran PPOB dengan alur cepat untuk pelanggan, member, dan agen.";
+
+const homeServices = [
+  "Pulsa",
+  "Paket Data",
+  "Token Listrik",
+  "E-Wallet",
+  "PPOB",
+  "Voucher Game",
+  "Telkom & Internet",
+  "TV Berlangganan",
+  "PDAM",
+];
 
 export const metadata: Metadata = {
   title: homeTitle,
@@ -57,8 +67,6 @@ export const metadata: Metadata = {
 
 export default async function GuestHomePage() {
   const session = (await getServerSession(authOptions)) as SessionShape | null;
-  const categories = (await getCategories()) as UserCategoryItem[];
-  const activeCategories = categories.filter((item) => item.aktif);
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
@@ -85,16 +93,16 @@ export default async function GuestHomePage() {
     name: "DayaKlik",
     url: CANONICAL_SITE_URL,
     description: homeDescription,
-    about: activeCategories.map((item) => item.nama),
+    about: homeServices,
     mainEntity: {
       "@type": "OfferCatalog",
       name: "Kategori Produk DayaKlik",
-      itemListElement: activeCategories.map((item, index) => ({
+      itemListElement: homeServices.map((name, index) => ({
         "@type": "ListItem",
         position: index + 1,
         item: {
           "@type": "Thing",
-          name: item.nama,
+          name,
         },
       })),
     },
@@ -145,9 +153,7 @@ export default async function GuestHomePage() {
       <Script id="homepage-faq-jsonld" type="application/ld+json">
         {JSON.stringify(faqJsonLd)}
       </Script>
-      <DayaKlikAppHome isLoggedIn={!!session?.backendToken} userName={session?.user?.name || null} />
-
-      <GuestBottomNav isLoggedIn={!!session?.backendToken} />
+      <DayaKlikAppHome isLoggedIn={!!session?.backendToken} />
     </main>
   );
 }
