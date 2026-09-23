@@ -120,6 +120,28 @@ jobs:
             printf '%s' "$SUDO_PASSWORD_B64" | base64 -d | sudo -S -p '' "$@"
           }
 
+          clean_release_dir() {
+            target_dir="$1"
+            shift
+
+            for item in "$target_dir"/.[!.]* "$target_dir"/..?* "$target_dir"/*; do
+              [ -e "$item" ] || continue
+              item_name="$(basename "$item")"
+              keep_item=0
+
+              for keep_name in "$@"; do
+                if [ "$item_name" = "$keep_name" ]; then
+                  keep_item=1
+                  break
+                fi
+              done
+
+              if [ "$keep_item" -eq 0 ]; then
+                rm -rf -- "$item"
+              fi
+            done
+          }
+
           if [ -z "$BACKEND_SOURCE_DIR" ] || [ -z "$FRONTEND_RELEASE_DIR" ]; then
             echo "BACKEND_SOURCE_DIR and FRONTEND_RELEASE_DIR must be set."
             exit 1
@@ -157,8 +179,8 @@ jobs:
 
           chmod -R u+w "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR" 2>/dev/null || true
 
-          find "$BACKEND_SOURCE_DIR" -mindepth 1 ! -name ".env" -exec rm -rf {} +
-          find "$FRONTEND_RELEASE_DIR" -mindepth 1 ! -name ".env" ! -name ".env.local" -exec rm -rf {} +
+          clean_release_dir "$BACKEND_SOURCE_DIR" ".env"
+          clean_release_dir "$FRONTEND_RELEASE_DIR" ".env" ".env.local"
 
           cp -a "$BACKEND_EXTRACT"/. "$BACKEND_SOURCE_DIR"/
           cp -a "$FRONTEND_EXTRACT"/. "$FRONTEND_RELEASE_DIR"/
