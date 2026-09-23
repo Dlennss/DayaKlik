@@ -157,9 +157,9 @@ export function RegisterCard() {
   if (err && !shake) setTimeout(() => setShake(true), 0);
   if (!err && shake) setTimeout(() => setShake(false), 0);
 
-  const inputClass = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#15965c] focus:ring-4 focus:ring-emerald-100";
-  const inputWithToggle = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] pr-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#15965c] focus:ring-4 focus:ring-emerald-100";
-  const inputIcon = "pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#67b7a7]";
+  const inputClass = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#185adb] focus:ring-4 focus:ring-blue-100";
+  const inputWithToggle = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] pr-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#185adb] focus:ring-4 focus:ring-blue-100";
+  const inputIcon = "pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#5f8fe8]";
   const toggleBtn = "absolute right-4 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition-colors hover:text-slate-600";
 
   return (
@@ -167,17 +167,17 @@ export function RegisterCard() {
       "auth-card dayaklik-register-card auth-jiggle w-full overflow-hidden rounded-[2px] bg-white shadow-[0_18px_50px_rgba(18,49,107,0.12)]",
       shake && "auth-shake"
     )}>
-      <div className="relative min-h-[213px] overflow-hidden bg-[linear-gradient(135deg,#064235_0%,#0a8556_57%,#38b449_100%)] px-6 pb-6 pt-7 text-white">
+      <div className="relative min-h-[213px] overflow-hidden bg-[linear-gradient(135deg,#0a3bb8_0%,#185adb_58%,#0b84ff_100%)] px-6 pb-6 pt-7 text-white">
         <div className="pointer-events-none absolute -right-9 -top-10 h-24 w-24 rounded-full bg-white/12" />
-        <div className="pointer-events-none absolute left-10 top-8 h-20 w-20 rounded-full border border-lime-200/12 bg-black/5" />
+        <div className="pointer-events-none absolute left-10 top-8 h-20 w-20 rounded-full border border-[#dfed79]/30 bg-white/5" />
         <div className="relative flex items-start justify-between gap-4">
           <div className="min-w-0">
             <Image
-              src="/dayaklik-assets/02_logo_brand/logo_lengkap_transparan.png"
+              src="/dayaklik-assets/02_logo_brand/logo_lengkap_crop.png"
               alt="DayaKlik"
               width={210}
               height={58}
-              className="h-[58px] w-[210px] rounded-[13px] bg-white/95 px-3 py-2 object-contain shadow-[0_14px_30px_rgba(6,78,59,0.18)]"
+              className="h-[58px] w-[210px] rounded-[13px] object-cover shadow-[0_14px_30px_rgba(0,26,84,0.22)]"
               priority
             />
             <h1 className="mt-5 text-[26px] font-black leading-tight text-white">Buat Akun</h1>
@@ -185,7 +185,7 @@ export function RegisterCard() {
               Daftar cepat untuk pulsa, data, game, dan e-wallet.
             </p>
           </div>
-          <span className="mt-1 grid h-[52px] w-[52px] shrink-0 place-items-center rounded-[18px] bg-white/15 ring-1 ring-white/15">
+          <span className="mt-1 grid h-[52px] w-[52px] shrink-0 place-items-center rounded-[18px] bg-white/15 ring-1 ring-white/20">
             <Zap className="h-6 w-6 fill-lime-300 text-lime-300" />
           </span>
         </div>
@@ -264,7 +264,7 @@ export function RegisterCard() {
           </div>
 
           <button
-            className="group relative mt-2 flex h-[56px] w-full items-center justify-center gap-3 rounded-[8px] bg-[linear-gradient(135deg,#0b7d55_0%,#16b934_100%)] text-base font-black text-white shadow-[0_14px_30px_rgba(22,185,52,0.26)] transition-all hover:shadow-[0_18px_38px_rgba(22,185,52,0.34)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+            className="group relative mt-2 flex h-[56px] w-full items-center justify-center gap-3 rounded-[8px] bg-[linear-gradient(135deg,#185adb_0%,#087bff_100%)] text-base font-black text-white shadow-[0_14px_30px_rgba(24,90,219,0.26)] transition-all hover:shadow-[0_18px_38px_rgba(24,90,219,0.34)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
             disabled={loading}
             type="submit"
           >
