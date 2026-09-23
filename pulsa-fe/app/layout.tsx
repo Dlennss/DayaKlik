@@ -3,8 +3,17 @@ import "../styles/brand.css";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
+function siteUrl() {
+  const raw = (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3101").trim();
+  if (!raw) return "http://localhost:3101";
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw.replace(/\/+$/, "");
+  return `https://${raw.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+}
+
+const SITE_URL = siteUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL((process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3101")),
+  metadataBase: new URL(SITE_URL),
   title: "DayaKlik",
   description: "Pulsa, paket data, e-wallet, token listrik, game, dan PPOB dalam satu tempat.",
   applicationName: "DayaKlik",
@@ -18,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DayaKlik",
     description: "Pulsa, paket data, e-wallet, token listrik, game, dan PPOB dalam satu tempat.",
-    url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3101"),
+    url: SITE_URL,
     siteName: "DayaKlik",
     type: "website",
     images: [

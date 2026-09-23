@@ -47,10 +47,10 @@ jobs:
       - name: Build frontend
         working-directory: pulsa-fe
         env:
-          API_BASE: ${{ secrets.API_BASE }}
-          NEXT_PUBLIC_API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          API_BASE: ${{ secrets.API_BASE || 'http://127.0.0.1:8101' }}
+          NEXT_PUBLIC_API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE || 'http://127.0.0.1:8101' }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL || 'https://dayaklik.com' }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || 'https://dayaklik.com' }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}

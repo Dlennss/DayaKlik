@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { History, House, UserRound, WalletCards } from "lucide-react";
+import { ScanLine } from "lucide-react";
 
-function navClass(active: boolean) {
-  return active
-    ? "flex min-w-0 flex-col items-center gap-1.5 py-1 text-[#185adb]! visited:text-[#185adb]!"
-    : "flex min-w-0 flex-col items-center gap-1.5 py-1 text-slate-400! transition visited:text-slate-400! hover:text-[#12316b]!";
+function asset(path: string) {
+  return `/dayaklik-assets/${path}`;
 }
 
-const iconClass = "h-5 w-5";
-const textClass = "text-[11px] font-bold leading-none";
+function navClass(active: boolean, extra = "") {
+  return active
+    ? `flex min-w-0 flex-col items-center gap-1.5 py-1 text-[#075dff]! visited:text-[#075dff]! ${extra}`
+    : `flex min-w-0 flex-col items-center gap-1.5 py-1 text-[#193969]! transition visited:text-[#193969]! hover:text-[#075dff]! ${extra}`;
+}
+
+const textClass = "text-[12px] font-semibold leading-none";
 
 type GuestBottomNavProps = {
   isLoggedIn?: boolean;
@@ -21,33 +24,47 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
   const pathname = usePathname() || "";
   const homeActive = pathname === "/";
   const historyActive = pathname.startsWith("/transaksi");
+  const promoActive = pathname.startsWith("/promo");
   const accountHref = isLoggedIn ? "/user/account" : "/login";
-  const saldoHref = isLoggedIn ? "/user/saldo" : "/login";
-  const saldoActive = isLoggedIn ? pathname.startsWith("/user/saldo") || pathname.startsWith("/user/account/topup") || pathname.startsWith("/user/account/mutasi") : false;
   const accountActive = isLoggedIn
-    ? pathname.startsWith("/user/account") && !saldoActive
+    ? pathname.startsWith("/user/account")
     : pathname.startsWith("/login");
 
   return (
-    <section className="brand-bottom-nav fixed bottom-0 left-1/2 z-[90] w-full max-w-md -translate-x-1/2 overflow-hidden rounded-t-[24px] border-t border-[#12316b]/10 bg-white/96 shadow-[0_-14px_34px_rgba(6,78,59,0.10)] backdrop-blur-xl md:bottom-0 md:w-97.5 md:max-w-none">
-      <div className="grid grid-cols-4 px-4 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2.5">
+    <section className="brand-bottom-nav fixed bottom-3 left-1/2 z-[90] w-[calc(100%-2rem)] max-w-[430px] -translate-x-1/2 overflow-visible rounded-[26px] border border-white/85 bg-white/96 shadow-[0_-6px_32px_rgba(6,48,111,0.14),0_18px_38px_rgba(6,48,111,0.12)] backdrop-blur-xl md:w-[390px]">
+      <div className="grid grid-cols-5 items-end px-5 pb-[calc(0.7rem+env(safe-area-inset-bottom))] pt-4">
         <Link href="/" prefetch={false} className={navClass(homeActive)}>
-          <House className={iconClass} strokeWidth={1.65} />
+          <span className={homeActive ? "grid h-13 w-13 place-items-center rounded-[16px] bg-[#e9f4ff]" : "grid h-13 w-13 place-items-center"}>
+            <img src={asset("12_webp_ringan/11_siap_pakai_256__beranda_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
+          </span>
           <span className={textClass}>Beranda</span>
         </Link>
 
         <Link href="/transaksi" prefetch={false} className={navClass(historyActive)}>
-          <History className={iconClass} strokeWidth={1.65} />
-          <span className={textClass}>Riwayat</span>
+          <span className="grid h-13 w-13 place-items-center">
+            <img src={asset("12_webp_ringan/11_siap_pakai_256__transaksi_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
+          </span>
+          <span className={textClass}>Transaksi</span>
         </Link>
 
-        <Link href={saldoHref} prefetch={false} className={navClass(saldoActive)}>
-          <WalletCards className={iconClass} strokeWidth={1.65} />
-          <span className={textClass}>Saldo</span>
+        <Link href="/kategori" prefetch={false} className={navClass(false, "-mt-9")}>
+          <span className="grid h-18 w-18 place-items-center rounded-full bg-[#0874ff] text-white shadow-[0_14px_28px_rgba(8,116,255,0.34)] ring-6 ring-[#e8f4ff]">
+            <ScanLine className="h-8 w-8" strokeWidth={2.5} />
+          </span>
+          <span className="text-[12px] font-semibold leading-none text-[#193969]">Scan</span>
+        </Link>
+
+        <Link href="/promo" prefetch={false} className={navClass(promoActive)}>
+          <span className="grid h-13 w-13 place-items-center">
+            <img src={asset("12_webp_ringan/11_siap_pakai_256__promo_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
+          </span>
+          <span className={textClass}>Promo</span>
         </Link>
 
         <Link href={accountHref} prefetch={false} className={navClass(accountActive)}>
-          <UserRound className={iconClass} strokeWidth={1.65} />
+          <span className="grid h-13 w-13 place-items-center">
+            <img src={asset("12_webp_ringan/11_siap_pakai_256__akun_nav_256.webp")} alt="" className="h-8 w-8 object-contain" />
+          </span>
           <span className={textClass}>Akun</span>
         </Link>
       </div>

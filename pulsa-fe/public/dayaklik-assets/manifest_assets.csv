@@ -1,0 +1,113 @@
+folder,name,file,kind,width,height,source_box,note
+00_sumber,Dashboard sumber,00_sumber/dayaklik_dashboard_sumber.png,source,993,1584,"0,0,993,1584",Gambar sumber utuh
+01_bagian_utama,dashboard_lengkap,01_bagian_utama/dashboard_lengkap.png,full_screen,993,1584,"0,0,993,1584",
+01_bagian_utama,header_lengkap,01_bagian_utama/header_lengkap.png,section,993,143,"0,0,993,143",
+01_bagian_utama,kartu_saldo_lengkap,01_bagian_utama/kartu_saldo_lengkap.png,section,944,236,"25,143,969,379",
+01_bagian_utama,banner_utama_lengkap,01_bagian_utama/banner_utama_lengkap.png,section,935,304,"29,397,964,701",
+01_bagian_utama,panel_semua_layanan,01_bagian_utama/panel_semua_layanan.png,section,944,415,"25,720,969,1135",
+01_bagian_utama,panel_promo_spesial,01_bagian_utama/panel_promo_spesial.png,section,941,247,"27,1151,968,1398",
+01_bagian_utama,navigasi_bawah_lengkap,01_bagian_utama/navigasi_bawah_lengkap.png,section,938,130,"29,1417,967,1547",
+02_logo_brand,logo_lengkap_crop,02_logo_brand/logo_lengkap_crop.png,crop,338,102,"35,20,373,122",Crop asli pada header
+02_logo_brand,logo_lengkap_transparan,02_logo_brand/logo_lengkap_transparan.png,transparent,329,85,,Versi transparan dari screenshot
+02_logo_brand,simbol_logo_transparan,02_logo_brand/simbol_logo_transparan.png,transparent,92,85,"35,20,137,124",
+02_logo_brand,wordmark_dayaklik_transparan,02_logo_brand/wordmark_dayaklik_transparan.png,transparent,217,45,"137,26,376,84",
+02_logo_brand,tagline_daya_untuk_harimu_transparan,02_logo_brand/tagline_daya_untuk_harimu_transparan.png,transparent,188,34,"145,78,343,116",
+11_siap_pakai_256,logo_lengkap_256,11_siap_pakai_256/logo_lengkap_256.png,canvas_256,256,256,,PNG transparan 256x256
+11_siap_pakai_256,simbol_logo_256,11_siap_pakai_256/simbol_logo_256.png,canvas_256,256,256,,PNG transparan 256x256
+11_siap_pakai_256,wordmark_256,11_siap_pakai_256/wordmark_256.png,canvas_256,256,256,,PNG transparan 256x256
+03_header,tombol_notifikasi,03_header/tombol_notifikasi.png,rounded_crop,87,89,"650,29,737,118",
+03_header,avatar_pengguna,03_header/avatar_pengguna.png,rounded_crop,91,91,"751,28,842,119",
+03_header,profil_pengguna,03_header/profil_pengguna.png,rounded_crop,130,86,"839,30,969,116",
+03_header,header_kanan_lengkap,03_header/header_kanan_lengkap.png,rounded_crop,325,101,"647,23,972,124",
+04_saldo_member,informasi_saldo,04_saldo_member/informasi_saldo.png,rounded_crop,281,102,"56,168,337,270",
+04_saldo_member,nominal_saldo,04_saldo_member/nominal_saldo.png,rounded_crop,278,56,"57,211,335,267",
+04_saldo_member,status_member_reguler,04_saldo_member/status_member_reguler.png,rounded_crop,291,61,"647,166,938,227",
+04_saldo_member,kartu_poin_member,04_saldo_member/kartu_poin_member.png,rounded_crop,297,107,"648,247,945,354",
+04_saldo_member,koin_poin,04_saldo_member/koin_poin.png,rounded_crop,76,79,"659,260,735,339",
+04_saldo_member,semua_tombol_aksi_saldo,04_saldo_member/semua_tombol_aksi_saldo.png,rounded_crop,553,71,"57,284,610,355",
+04_saldo_member,tombol_isi_saldo,04_saldo_member/tombol_isi_saldo.png,rounded_crop,194,68,"58,286,252,354",
+04_saldo_member,tombol_kirim,04_saldo_member/tombol_kirim.png,rounded_crop,158,68,"266,286,424,354",
+04_saldo_member,tombol_riwayat,04_saldo_member/tombol_riwayat.png,rounded_crop,178,68,"432,286,610,354",
+04_saldo_member/ikon_transparan,ikon_isi_saldo,04_saldo_member/ikon_transparan/ikon_isi_saldo.png,transparent,59,56,"82,292,141,348",
+11_siap_pakai_256,ikon_isi_saldo_256,11_siap_pakai_256/ikon_isi_saldo_256.png,canvas_256,256,256,,PNG transparan 256x256
+04_saldo_member/ikon_transparan,ikon_kirim,04_saldo_member/ikon_transparan/ikon_kirim.png,transparent,57,55,"286,292,343,347",
+11_siap_pakai_256,ikon_kirim_256,11_siap_pakai_256/ikon_kirim_256.png,canvas_256,256,256,,PNG transparan 256x256
+04_saldo_member/ikon_transparan,ikon_riwayat,04_saldo_member/ikon_transparan/ikon_riwayat.png,transparent,57,56,"452,292,509,348",
+11_siap_pakai_256,ikon_riwayat_256,11_siap_pakai_256/ikon_riwayat_256.png,canvas_256,256,256,,PNG transparan 256x256
+04_saldo_member/ikon_transparan,ikon_member_crown,04_saldo_member/ikon_transparan/ikon_member_crown.png,transparent,47,45,"663,173,710,218",
+11_siap_pakai_256,ikon_member_crown_256,11_siap_pakai_256/ikon_member_crown_256.png,canvas_256,256,256,,PNG transparan 256x256
+04_saldo_member/ikon_transparan,ikon_panah_member,04_saldo_member/ikon_transparan/ikon_panah_member.png,transparent,33,43,"895,174,928,217",
+11_siap_pakai_256,ikon_panah_member_256,11_siap_pakai_256/ikon_panah_member_256.png,canvas_256,256,256,,PNG transparan 256x256
+04_saldo_member/ikon_transparan,ikon_panah_poin,04_saldo_member/ikon_transparan/ikon_panah_poin.png,transparent,35,45,"896,281,931,326",
+11_siap_pakai_256,ikon_panah_poin_256,11_siap_pakai_256/ikon_panah_poin_256.png,canvas_256,256,256,,PNG transparan 256x256
+05_banner_utama,banner_utama,05_banner_utama/banner_utama.png,crop,935,304,"29,397,964,701",
+05_banner_utama,logo_kecil_banner,05_banner_utama/logo_kecil_banner.png,crop,134,42,"65,416,199,458",
+05_banner_utama,judul_banner,05_banner_utama/judul_banner.png,crop,431,85,"66,458,497,543",
+05_banner_utama,deskripsi_banner,05_banner_utama/deskripsi_banner.png,crop,374,57,"67,549,441,606",
+05_banner_utama,tombol_transaksi_sekarang,05_banner_utama/tombol_transaksi_sekarang.png,crop,252,57,"66,614,318,671",
+05_banner_utama,ilustrasi_hp_dan_icon,05_banner_utama/ilustrasi_hp_dan_icon.png,crop,455,296,"494,403,949,699",
+05_banner_utama,icon_petir_banner,05_banner_utama/icon_petir_banner.png,rounded_crop,93,89,"532,435,625,524",
+05_banner_utama,icon_wifi_banner,05_banner_utama/icon_wifi_banner.png,rounded_crop,97,106,"498,516,595,622",
+05_banner_utama,icon_dompet_banner,05_banner_utama/icon_dompet_banner.png,rounded_crop,123,122,"691,565,814,687",
+05_banner_utama,icon_game_banner,05_banner_utama/icon_game_banner.png,rounded_crop,113,112,"809,550,922,662",
+05_banner_utama,indikator_slider,05_banner_utama/indikator_slider.png,crop,133,37,"426,654,559,691",
+05_banner_utama,tagline_tulisan_tangan,05_banner_utama/tagline_tulisan_tangan.png,crop,127,133,"820,424,947,557",
+06_layanan,judul_dan_lihat_semua,06_layanan/judul_dan_lihat_semua.png,crop,877,44,"57,734,934,778",
+06_layanan/icon_tile,pulsa_tile,06_layanan/icon_tile/pulsa_tile.png,rounded_crop,110,110,"70,789,180,899",Tile ikon lengkap dengan latar pastel
+06_layanan/label,pulsa_label,06_layanan/label/pulsa_label.png,crop,81,39,"88,900,169,939",
+11_siap_pakai_256,pulsa_tile_256,11_siap_pakai_256/pulsa_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,paket_data_tile,06_layanan/icon_tile/paket_data_tile.png,rounded_crop,110,110,"253,789,363,899",Tile ikon lengkap dengan latar pastel
+06_layanan/label,paket_data_label,06_layanan/label/paket_data_label.png,crop,120,40,"250,900,370,940",
+11_siap_pakai_256,paket_data_tile_256,11_siap_pakai_256/paket_data_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,token_listrik_tile,06_layanan/icon_tile/token_listrik_tile.png,rounded_crop,112,110,"435,789,547,899",Tile ikon lengkap dengan latar pastel
+06_layanan/label,token_listrik_label,06_layanan/label/token_listrik_label.png,crop,138,40,"424,900,562,940",
+11_siap_pakai_256,token_listrik_tile_256,11_siap_pakai_256/token_listrik_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,e_wallet_tile,06_layanan/icon_tile/e_wallet_tile.png,rounded_crop,112,110,"618,789,730,899",Tile ikon lengkap dengan latar pastel
+06_layanan/label,e_wallet_label,06_layanan/label/e_wallet_label.png,crop,108,40,"619,900,727,940",
+11_siap_pakai_256,e_wallet_tile_256,11_siap_pakai_256/e_wallet_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,ppob_tile,06_layanan/icon_tile/ppob_tile.png,rounded_crop,111,110,"802,789,913,899",Tile ikon lengkap dengan latar pastel
+06_layanan/label,ppob_label,06_layanan/label/ppob_label.png,crop,83,40,"817,900,900,940",
+11_siap_pakai_256,ppob_tile_256,11_siap_pakai_256/ppob_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,voucher_game_tile,06_layanan/icon_tile/voucher_game_tile.png,rounded_crop,110,111,"70,956,180,1067",Tile ikon lengkap dengan latar pastel
+06_layanan/label,voucher_game_label,06_layanan/label/voucher_game_label.png,crop,141,49,"55,1068,196,1117",
+11_siap_pakai_256,voucher_game_tile_256,11_siap_pakai_256/voucher_game_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,telkom_dan_internet_tile,06_layanan/icon_tile/telkom_dan_internet_tile.png,rounded_crop,110,111,"253,956,363,1067",Tile ikon lengkap dengan latar pastel
+06_layanan/label,telkom_dan_internet_label,06_layanan/label/telkom_dan_internet_label.png,crop,125,54,"246,1068,371,1122",
+11_siap_pakai_256,telkom_dan_internet_tile_256,11_siap_pakai_256/telkom_dan_internet_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,tv_berlangganan_tile,06_layanan/icon_tile/tv_berlangganan_tile.png,rounded_crop,112,111,"435,956,547,1067",Tile ikon lengkap dengan latar pastel
+06_layanan/label,tv_berlangganan_label,06_layanan/label/tv_berlangganan_label.png,crop,143,54,"420,1068,563,1122",
+11_siap_pakai_256,tv_berlangganan_tile_256,11_siap_pakai_256/tv_berlangganan_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,pdam_tile,06_layanan/icon_tile/pdam_tile.png,rounded_crop,112,111,"618,956,730,1067",Tile ikon lengkap dengan latar pastel
+06_layanan/label,pdam_label,06_layanan/label/pdam_label.png,crop,81,41,"635,1070,716,1111",
+11_siap_pakai_256,pdam_tile_256,11_siap_pakai_256/pdam_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+06_layanan/icon_tile,lainnya_tile,06_layanan/icon_tile/lainnya_tile.png,rounded_crop,111,111,"802,956,913,1067",Tile ikon lengkap dengan latar pastel
+06_layanan/label,lainnya_label,06_layanan/label/lainnya_label.png,crop,89,41,"813,1070,902,1111",
+11_siap_pakai_256,lainnya_tile_256,11_siap_pakai_256/lainnya_tile_256.png,canvas_256,256,256,,Tile ikon transparan 256x256
+07_promo,judul_dan_lihat_semua,07_promo/judul_dan_lihat_semua.png,crop,878,41,"56,1167,934,1208",
+07_promo/kartu,cashback_hingga_10_persen,07_promo/kartu/cashback_hingga_10_persen.png,rounded_crop,301,162,"45,1217,346,1379",
+07_promo/kartu,harga_terbaik_setiap_hari,07_promo/kartu/harga_terbaik_setiap_hari.png,rounded_crop,295,162,"353,1217,648,1379",
+07_promo/kartu,transaksi_lebih_hemat,07_promo/kartu/transaksi_lebih_hemat.png,rounded_crop,297,162,"654,1217,951,1379",
+07_promo/ilustrasi,ilustrasi_hadiah_cashback,07_promo/ilustrasi/ilustrasi_hadiah_cashback.png,crop,148,140,"195,1235,343,1375",
+07_promo/ilustrasi,ilustrasi_voucher,07_promo/ilustrasi/ilustrasi_voucher.png,crop,156,140,"486,1234,642,1374",
+07_promo/ilustrasi,ilustrasi_member_crown,07_promo/ilustrasi/ilustrasi_member_crown.png,crop,157,143,"789,1231,946,1374",
+08_navigasi_bawah,navigasi_bawah_lengkap,08_navigasi_bawah/navigasi_bawah_lengkap.png,section,938,130,"29,1417,967,1547",
+08_navigasi_bawah/grup,beranda_grup,08_navigasi_bawah/grup/beranda_grup.png,crop,135,105,"72,1427,207,1532",
+08_navigasi_bawah/ikon_transparan,beranda_ikon,08_navigasi_bawah/ikon_transparan/beranda_ikon.png,transparent,72,63,"102,1434,174,1497",
+08_navigasi_bawah/label,beranda_label,08_navigasi_bawah/label/beranda_label.png,crop,82,34,"99,1496,181,1530",
+11_siap_pakai_256,beranda_nav_256,11_siap_pakai_256/beranda_nav_256.png,canvas_256,256,256,,Ikon navigasi transparan 256x256
+08_navigasi_bawah/grup,transaksi_grup,08_navigasi_bawah/grup/transaksi_grup.png,crop,133,105,"250,1427,383,1532",
+08_navigasi_bawah/ikon_transparan,transaksi_ikon,08_navigasi_bawah/ikon_transparan/transaksi_ikon.png,transparent,62,63,"282,1434,344,1497",
+08_navigasi_bawah/label,transaksi_label,08_navigasi_bawah/label/transaksi_label.png,crop,99,34,"267,1496,366,1530",
+11_siap_pakai_256,transaksi_nav_256,11_siap_pakai_256/transaksi_nav_256.png,canvas_256,256,256,,Ikon navigasi transparan 256x256
+08_navigasi_bawah/grup,scan_grup,08_navigasi_bawah/grup/scan_grup.png,crop,147,147,"422,1386,569,1533",
+08_navigasi_bawah/ikon_transparan,scan_ikon,08_navigasi_bawah/ikon_transparan/scan_ikon.png,transparent,116,116,"437,1388,553,1504",
+08_navigasi_bawah/label,scan_label,08_navigasi_bawah/label/scan_label.png,crop,77,32,"458,1501,535,1533",
+11_siap_pakai_256,scan_nav_256,11_siap_pakai_256/scan_nav_256.png,canvas_256,256,256,,Ikon navigasi transparan 256x256
+08_navigasi_bawah/grup,promo_grup,08_navigasi_bawah/grup/promo_grup.png,crop,126,105,"614,1427,740,1532",
+08_navigasi_bawah/ikon_transparan,promo_ikon,08_navigasi_bawah/ikon_transparan/promo_ikon.png,transparent,70,63,"641,1434,711,1497",
+08_navigasi_bawah/label,promo_label,08_navigasi_bawah/label/promo_label.png,crop,67,34,"642,1496,709,1530",
+11_siap_pakai_256,promo_nav_256,11_siap_pakai_256/promo_nav_256.png,canvas_256,256,256,,Ikon navigasi transparan 256x256
+08_navigasi_bawah/grup,akun_grup,08_navigasi_bawah/grup/akun_grup.png,crop,130,105,"783,1427,913,1532",
+08_navigasi_bawah/ikon_transparan,akun_ikon,08_navigasi_bawah/ikon_transparan/akun_ikon.png,transparent,69,63,"812,1434,881,1497",
+08_navigasi_bawah/label,akun_label,08_navigasi_bawah/label/akun_label.png,crop,67,34,"814,1496,881,1530",
+11_siap_pakai_256,akun_nav_256,11_siap_pakai_256/akun_nav_256.png,canvas_256,256,256,,Ikon navigasi transparan 256x256

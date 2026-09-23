@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { Headset, Zap } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Headset } from "lucide-react";
 
 type AppTopHeaderProps = {
   isLoggedIn?: boolean;
@@ -9,11 +12,14 @@ type AppTopHeaderProps = {
 };
 
 export function AppTopHeader({ isLoggedIn = false, userName, saldo, role }: AppTopHeaderProps) {
+  const pathname = usePathname() || "";
   const normalizedRole = String(role || "").trim().toLowerCase();
   const isRetailLoggedIn = isLoggedIn && (normalizedRole === "user" || normalizedRole === "agent" || normalizedRole === "master");
   const homeHref = isRetailLoggedIn ? "/user" : "/";
   void userName;
   void saldo;
+
+  if (pathname === "/") return null;
 
   return (
     <header className="brand-app-header sticky top-0 z-30 overflow-hidden bg-[#12316b] px-3 pb-3 pt-2 text-white shadow-[0_16px_34px_rgba(5,46,38,0.22)]">
