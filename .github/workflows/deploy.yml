@@ -159,30 +159,38 @@ jobs:
             done
           }
 
-          if [ -z "$BACKEND_SOURCE_DIR" ] || [ -z "$FRONTEND_RELEASE_DIR" ]; then
-            echo "BACKEND_SOURCE_DIR and FRONTEND_RELEASE_DIR must be set."
+          if [ -z "$FRONTEND_RELEASE_DIR" ]; then
+            echo "FRONTEND_RELEASE_DIR must be set."
             exit 1
           fi
 
-          case "$BACKEND_SOURCE_DIR" in
-            /*) ;;
-            *) echo "BACKEND_SOURCE_DIR must be an absolute path."; exit 1 ;;
-          esac
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            case "$BACKEND_SOURCE_DIR" in
+              /*) ;;
+              *) echo "BACKEND_SOURCE_DIR must be an absolute path when set."; exit 1 ;;
+            esac
+          fi
 
           case "$FRONTEND_RELEASE_DIR" in
             /*) ;;
             *) echo "FRONTEND_RELEASE_DIR must be an absolute path."; exit 1 ;;
           esac
 
-          mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR" 2>/dev/null || sudo_with_password mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            mkdir -p "$BACKEND_SOURCE_DIR" 2>/dev/null || sudo_with_password mkdir -p "$BACKEND_SOURCE_DIR"
+          fi
+          mkdir -p "$FRONTEND_RELEASE_DIR" 2>/dev/null || sudo_with_password mkdir -p "$FRONTEND_RELEASE_DIR"
 
-          if [ ! -w "$BACKEND_SOURCE_DIR" ] || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
+          if { [ -n "$BACKEND_SOURCE_DIR" ] && [ ! -w "$BACKEND_SOURCE_DIR" ]; } || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
             echo "Deploy directories are not writable by $USER."
             echo "Trying to fix ownership with sudo..."
-            sudo_with_password chown -R "$(id -un):$(id -gn)" "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
+            if [ -n "$BACKEND_SOURCE_DIR" ]; then
+              sudo_with_password chown -R "$(id -un):$(id -gn)" "$BACKEND_SOURCE_DIR"
+            fi
+            sudo_with_password chown -R "$(id -un):$(id -gn)" "$FRONTEND_RELEASE_DIR"
           fi
 
-          if [ ! -w "$BACKEND_SOURCE_DIR" ] || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
+          if { [ -n "$BACKEND_SOURCE_DIR" ] && [ ! -w "$BACKEND_SOURCE_DIR" ]; } || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
             echo "Deploy directories are still not writable by $USER after sudo chown."
             exit 1
           fi
@@ -194,18 +202,27 @@ jobs:
           tar --extract --gzip --file "$DEPLOY_TMP/backend-release.tar.gz" --directory "$BACKEND_EXTRACT" --no-same-owner --no-same-permissions --touch
           tar --extract --gzip --file "$DEPLOY_TMP/frontend-release.tar.gz" --directory "$FRONTEND_EXTRACT" --no-same-owner --no-same-permissions --touch
 
-          chmod -R u+w "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR" 2>/dev/null || true
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            chmod -R u+w "$BACKEND_SOURCE_DIR" 2>/dev/null || true
+          fi
+          chmod -R u+w "$FRONTEND_RELEASE_DIR" 2>/dev/null || true
 
-          clean_release_dir "$BACKEND_SOURCE_DIR" ".env"
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            clean_release_dir "$BACKEND_SOURCE_DIR" ".env"
+          fi
           clean_release_dir "$FRONTEND_RELEASE_DIR" ".env" ".env.local"
 
-          cp -a "$BACKEND_EXTRACT"/. "$BACKEND_SOURCE_DIR"/
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            cp -a "$BACKEND_EXTRACT"/. "$BACKEND_SOURCE_DIR"/
+          fi
           cp -a "$FRONTEND_EXTRACT"/. "$FRONTEND_RELEASE_DIR"/
 
-          chmod +x "$BACKEND_SOURCE_DIR/pulsa2"
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            chmod +x "$BACKEND_SOURCE_DIR/pulsa2"
+          fi
           rm -rf "$DEPLOY_TMP"
 
-          if [ -n "${BACKEND_RESTART_COMMAND_B64:-}" ]; then
+          if [ -n "$BACKEND_SOURCE_DIR" ] && [ -n "${BACKEND_RESTART_COMMAND_B64:-}" ]; then
             BACKEND_RESTART_COMMAND="$(printf '%s' "$BACKEND_RESTART_COMMAND_B64" | base64 -d)"
             if [ -n "$BACKEND_RESTART_COMMAND" ]; then
               echo "Restarting backend..."
@@ -248,7 +265,11 @@ jobs:
             sudo_with_password systemctl restart sikouta-frontend 2>/dev/null || true
           fi
 
-          echo "Backend deployed to $BACKEND_SOURCE_DIR"
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            echo "Backend deployed to $BACKEND_SOURCE_DIR"
+          else
+            echo "Backend deploy skipped because BACKEND_SOURCE_DIR is empty."
+          fi
           echo "Frontend deployed to $FRONTEND_RELEASE_DIR"
           echo "Deploy finished."
           REMOTE
