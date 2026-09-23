@@ -102,9 +102,23 @@ jobs:
           FRONTEND_RELEASE_DIR: ${{ secrets.FRONTEND_RELEASE_DIR }}
           DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
         run: |
+          SUDO_PASSWORD_B64="$(printf '%s' "$SSHPASS" | base64 -w 0)"
           sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" \
-            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' DEPLOY_TMP='$DEPLOY_TMP' bash -s" <<'REMOTE'
+            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' DEPLOY_TMP='$DEPLOY_TMP' SUDO_PASSWORD_B64='$SUDO_PASSWORD_B64' bash -s" <<'REMOTE'
           set -euo pipefail
+
+          sudo_with_password() {
+            if sudo -n true 2>/dev/null; then
+              sudo "$@"
+              return
+            fi
+
+            if [ -z "${SUDO_PASSWORD_B64:-}" ]; then
+              return 1
+            fi
+
+            printf '%s' "$SUDO_PASSWORD_B64" | base64 -d | sudo -S -p '' "$@"
+          }
 
           if [ -z "$BACKEND_SOURCE_DIR" ] || [ -z "$FRONTEND_RELEASE_DIR" ]; then
             echo "BACKEND_SOURCE_DIR and FRONTEND_RELEASE_DIR must be set."
@@ -121,12 +135,16 @@ jobs:
             *) echo "FRONTEND_RELEASE_DIR must be an absolute path."; exit 1 ;;
           esac
 
-          mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
+          mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR" 2>/dev/null || sudo_with_password mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
 
           if [ ! -w "$BACKEND_SOURCE_DIR" ] || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
             echo "Deploy directories are not writable by $USER."
-            echo "Fix ownership on the server, for example:"
-            echo "  sudo chown -R $USER:$USER '$BACKEND_SOURCE_DIR' '$FRONTEND_RELEASE_DIR'"
+            echo "Trying to fix ownership with sudo..."
+            sudo_with_password chown -R "$(id -un):$(id -gn)" "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
+          fi
+
+          if [ ! -w "$BACKEND_SOURCE_DIR" ] || [ ! -w "$FRONTEND_RELEASE_DIR" ]; then
+            echo "Deploy directories are still not writable by $USER after sudo chown."
             exit 1
           fi
 
