@@ -103,7 +103,7 @@ jobs:
           FRONTEND_RELEASE_DIR: ${{ secrets.FRONTEND_RELEASE_DIR }}
           BACKEND_RESTART_COMMAND: ${{ secrets.BACKEND_RESTART_COMMAND }}
           FRONTEND_RESTART_COMMAND: ${{ secrets.FRONTEND_RESTART_COMMAND }}
-          FRONTEND_PORT: ${{ secrets.FRONTEND_PORT || '3101' }}
+          FRONTEND_PORT: ${{ secrets.FRONTEND_PORT }}
           DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
         run: |
           SUDO_PASSWORD_B64="$(printf '%s' "$SSHPASS" | base64 -w 0)"
@@ -211,7 +211,17 @@ jobs:
             echo "Restarting frontend..."
             bash -lc "$FRONTEND_RESTART_COMMAND"
           elif command -v pm2 >/dev/null 2>&1; then
+            if [ -z "${FRONTEND_PORT:-}" ]; then
+              echo "FRONTEND_PORT is empty. Trying to detect Nginx proxy port for dayaklik.com..."
+              FRONTEND_PORT="$(sudo_with_password sh -c 'grep -Rhs "proxy_pass" /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null | grep -Eo "127\\.0\\.0\\.1:[0-9]+|localhost:[0-9]+" | grep -Eo "[0-9]+" | head -n 1' || true)"
+            fi
+
+            if [ -z "${FRONTEND_PORT:-}" ]; then
+              FRONTEND_PORT=3101
+            fi
+
             echo "FRONTEND_RESTART_COMMAND is empty. Starting frontend from release directory with PM2..."
+            echo "Frontend port: $FRONTEND_PORT"
             pm2 delete dayaklik-fe 2>/dev/null || true
             if command -v fuser >/dev/null 2>&1; then
               fuser -k "${FRONTEND_PORT}/tcp" 2>/dev/null || true
