@@ -1,0 +1,120 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: pulsa-fe/package-lock.json
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: pulsa-be/go.mod
+          cache-dependency-path: pulsa-be/go.sum
+
+      - name: Build backend
+        working-directory: pulsa-be
+        run: |
+          mkdir -p ../dist/backend
+          go build -trimpath -ldflags="-s -w" -o ../dist/backend/pulsa2 .
+          cp .env.example ../dist/backend/.env.example
+          cp -R sql ../dist/backend/sql
+
+      - name: Install frontend dependencies
+        working-directory: pulsa-fe
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: pulsa-fe
+        env:
+          API_BASE: ${{ secrets.API_BASE }}
+          NEXT_PUBLIC_API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          GOOGLE_LOGIN_ENABLED: ${{ secrets.GOOGLE_LOGIN_ENABLED }}
+          NEXT_PUBLIC_GOOGLE_LOGIN_ENABLED: ${{ secrets.NEXT_PUBLIC_GOOGLE_LOGIN_ENABLED }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          NEXT_PUBLIC_TURNSTILE_ENABLED: ${{ secrets.NEXT_PUBLIC_TURNSTILE_ENABLED }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
+        run: |
+          npm run build
+          mkdir -p ../dist/frontend
+          cp -R .next/standalone/. ../dist/frontend/
+          mkdir -p ../dist/frontend/.next/static
+          cp -R .next/static/. ../dist/frontend/.next/static/
+          cp -R public ../dist/frontend/public
+          cp .env-example ../dist/frontend/.env-example
+
+      - name: Package release
+        run: |
+          tar -czf backend-release.tar.gz -C dist/backend .
+          tar -czf frontend-release.tar.gz -C dist/frontend .
+
+      - name: Install SSH tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Upload release packages
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$DEPLOY_TMP'"
+          sshpass -e scp -o StrictHostKeyChecking=no -P "$SERVER_PORT" backend-release.tar.gz frontend-release.tar.gz "$SERVER_USER@$SERVER_HOST:$DEPLOY_TMP/"
+
+      - name: Extract release on server
+        env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          BACKEND_SOURCE_DIR: ${{ secrets.BACKEND_SOURCE_DIR }}
+          FRONTEND_RELEASE_DIR: ${{ secrets.FRONTEND_RELEASE_DIR }}
+          DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" \
+            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' DEPLOY_TMP='$DEPLOY_TMP' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          mkdir -p "$BACKEND_SOURCE_DIR" "$FRONTEND_RELEASE_DIR"
+
+          tar -xzf "$DEPLOY_TMP/backend-release.tar.gz" -C "$BACKEND_SOURCE_DIR"
+          tar -xzf "$DEPLOY_TMP/frontend-release.tar.gz" -C "$FRONTEND_RELEASE_DIR"
+
+          chmod +x "$BACKEND_SOURCE_DIR/pulsa2"
+          rm -rf "$DEPLOY_TMP"
+
+          echo "Backend deployed to $BACKEND_SOURCE_DIR"
+          echo "Frontend deployed to $FRONTEND_RELEASE_DIR"
+          echo "Restart your backend/frontend services on the server if they are already running."
+          REMOTE
