@@ -157,35 +157,35 @@ export function RegisterCard() {
   if (err && !shake) setTimeout(() => setShake(true), 0);
   if (!err && shake) setTimeout(() => setShake(false), 0);
 
-  const inputClass = "h-[54px] w-full rounded-2xl border border-slate-200 bg-white px-[52px] text-sm font-semibold text-slate-900 outline-none shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition placeholder:text-slate-400 focus:border-[#10b981] focus:ring-4 focus:ring-emerald-100";
-  const inputWithToggle = "h-[54px] w-full rounded-2xl border border-slate-200 bg-white px-[52px] pr-[52px] text-sm font-semibold text-slate-900 outline-none shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition placeholder:text-slate-400 focus:border-[#10b981] focus:ring-4 focus:ring-emerald-100";
-  const inputIcon = "pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-emerald-700/55";
+  const inputClass = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#15965c] focus:ring-4 focus:ring-emerald-100";
+  const inputWithToggle = "h-[54px] w-full rounded-[4px] border border-[#d8e3ef] bg-white px-[52px] pr-[52px] text-sm font-bold text-[#1c2a3e] outline-none transition placeholder:text-[#98a8bf] focus:border-[#15965c] focus:ring-4 focus:ring-emerald-100";
+  const inputIcon = "pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#67b7a7]";
   const toggleBtn = "absolute right-4 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition-colors hover:text-slate-600";
 
   return (
     <section className={cn(
-      "auth-card auth-jiggle overflow-hidden rounded-[28px] bg-white/95 shadow-[0_24px_64px_rgba(5,46,38,0.32)]",
+      "auth-card dayaklik-register-card auth-jiggle w-full overflow-hidden rounded-[2px] bg-white shadow-[0_18px_50px_rgba(18,49,107,0.12)]",
       shake && "auth-shake"
     )}>
-      <div className="relative overflow-hidden bg-[linear-gradient(135deg,#052e26_0%,#047857_60%,#8ee82d_150%)] px-6 pb-6 pt-7 text-white">
-        <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-white/10" />
-        <div className="pointer-events-none absolute left-6 top-6 h-20 w-20 rounded-full border border-lime-200/20" />
+      <div className="relative min-h-[213px] overflow-hidden bg-[linear-gradient(135deg,#064235_0%,#0a8556_57%,#38b449_100%)] px-6 pb-6 pt-7 text-white">
+        <div className="pointer-events-none absolute -right-9 -top-10 h-24 w-24 rounded-full bg-white/12" />
+        <div className="pointer-events-none absolute left-10 top-8 h-20 w-20 rounded-full border border-lime-200/12 bg-black/5" />
         <div className="relative flex items-start justify-between gap-4">
           <div className="min-w-0">
             <Image
-              src="/images/logo-pulsakilat-header.svg"
+              src="/dayaklik-assets/02_logo_brand/logo_lengkap_transparan.png"
               alt="DayaKlik"
-              width={250}
+              width={210}
               height={58}
-              className="h-14 w-auto max-w-[210px] rounded-2xl bg-white/95 px-3 py-2 object-contain shadow-[0_14px_26px_rgba(6,78,59,0.18)]"
+              className="h-[58px] w-[210px] rounded-[13px] bg-white/95 px-3 py-2 object-contain shadow-[0_14px_30px_rgba(6,78,59,0.18)]"
               priority
             />
-            <h1 className="mt-5 text-2xl font-black text-white">Buat Akun</h1>
-            <p className="mt-1.5 max-w-[270px] text-sm font-medium leading-6 text-emerald-50/80">
+            <h1 className="mt-5 text-[26px] font-black leading-tight text-white">Buat Akun</h1>
+            <p className="mt-2 max-w-[285px] text-sm font-medium leading-6 text-white/90">
               Daftar cepat untuk pulsa, data, game, dan e-wallet.
             </p>
           </div>
-          <span className="mt-1 grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/20">
+          <span className="mt-1 grid h-[52px] w-[52px] shrink-0 place-items-center rounded-[18px] bg-white/15 ring-1 ring-white/15">
             <Zap className="h-6 w-6 fill-lime-300 text-lime-300" />
           </span>
         </div>
@@ -208,9 +208,9 @@ export function RegisterCard() {
           </div>
         )}
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-[18px]">
           <div>
-            <label className="mb-3 block text-sm font-bold text-slate-800">Nama Lengkap</label>
+            <label className="mb-3 block text-sm font-black text-[#1c2a3e]">Nama Lengkap</label>
             <div className="relative">
               <UserRound className={inputIcon} />
               <input className={inputClass} value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama anda" autoComplete="name" />
@@ -218,7 +218,7 @@ export function RegisterCard() {
           </div>
 
           <div>
-            <label className="mb-3 block text-sm font-bold text-slate-800">Email</label>
+            <label className="mb-3 block text-sm font-black text-[#1c2a3e]">Email</label>
             <div className="relative">
               <Mail className={inputIcon} />
               <input className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" autoComplete="email" type="email" />
@@ -226,7 +226,7 @@ export function RegisterCard() {
           </div>
 
           <div>
-            <label className="mb-3 block text-sm font-bold text-slate-800">Nomor Telepon</label>
+            <label className="mb-3 block text-sm font-black text-[#1c2a3e]">Nomor Telepon</label>
             <div className="relative">
               <Phone className={inputIcon} />
               <input
@@ -242,7 +242,7 @@ export function RegisterCard() {
           </div>
 
           <div>
-            <label className="mb-3 block text-sm font-bold text-slate-800">Password</label>
+            <label className="mb-3 block text-sm font-black text-[#1c2a3e]">Password</label>
             <div className="relative">
               <LockKeyhole className={inputIcon} />
               <input className={inputWithToggle} type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimal 8 karakter" autoComplete="new-password" />
@@ -253,7 +253,7 @@ export function RegisterCard() {
           </div>
 
           <div>
-            <label className="mb-3 block text-sm font-bold text-slate-800">Konfirmasi Password</label>
+            <label className="mb-3 block text-sm font-black text-[#1c2a3e]">Konfirmasi Password</label>
             <div className="relative">
               <ShieldCheck className={inputIcon} />
               <input className={inputWithToggle} type={showConfirmPassword ? "text" : "password"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Ulangi password" autoComplete="new-password" />
@@ -264,7 +264,7 @@ export function RegisterCard() {
           </div>
 
           <button
-            className="group relative mt-2 flex h-[58px] w-full items-center justify-center gap-3 rounded-2xl bg-linear-to-r from-[#009944] via-[#16b934] to-[#57d735] text-base font-black text-white shadow-[0_14px_30px_rgba(22,185,52,0.34)] transition-all hover:shadow-[0_18px_38px_rgba(22,185,52,0.44)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+            className="group relative mt-2 flex h-[56px] w-full items-center justify-center gap-3 rounded-[8px] bg-[linear-gradient(135deg,#0b7d55_0%,#16b934_100%)] text-base font-black text-white shadow-[0_14px_30px_rgba(22,185,52,0.26)] transition-all hover:shadow-[0_18px_38px_rgba(22,185,52,0.34)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
             disabled={loading}
             type="submit"
           >
