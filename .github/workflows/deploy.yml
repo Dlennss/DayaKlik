@@ -217,6 +217,11 @@ jobs:
           fi
           cp -a "$FRONTEND_EXTRACT"/. "$FRONTEND_RELEASE_DIR"/
 
+          if [ ! -f "$FRONTEND_RELEASE_DIR/public/dayaklik-assets/01_bagian_utama/dashboard_lengkap.png" ]; then
+            echo "::error::New DayaKlik dashboard asset was not copied to FRONTEND_RELEASE_DIR/public. Check FRONTEND_RELEASE_DIR."
+            exit 1
+          fi
+
           if [ -n "$BACKEND_SOURCE_DIR" ]; then
             chmod +x "$BACKEND_SOURCE_DIR/pulsa2"
           fi
@@ -270,6 +275,16 @@ jobs:
           else
             echo "Backend deploy skipped because BACKEND_SOURCE_DIR is empty."
           fi
+
+          if [ -n "${FRONTEND_PORT:-}" ] && command -v curl >/dev/null 2>&1; then
+            sleep 2
+            if ! curl -fsS "http://127.0.0.1:${FRONTEND_PORT}/dayaklik-assets/01_bagian_utama/dashboard_lengkap.png" >/dev/null; then
+              echo "::warning::The new dashboard asset is present in FRONTEND_RELEASE_DIR, but localhost:$FRONTEND_PORT is not serving it. Nginx/PM2 may still point to an older frontend process or different folder."
+              command -v pm2 >/dev/null 2>&1 && pm2 list || true
+              sudo_with_password sh -c 'grep -Rhs "proxy_pass" /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null' || true
+            fi
+          fi
+
           echo "Frontend deployed to $FRONTEND_RELEASE_DIR"
           echo "Deploy finished."
           REMOTE
