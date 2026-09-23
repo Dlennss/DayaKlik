@@ -96,17 +96,17 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
   return (
     <div className="min-h-dvh overflow-x-hidden bg-[#eef6ff] text-[#071d55]">
       <div className="mx-auto min-h-dvh w-full max-w-[390px] overflow-hidden bg-[#eef6ff] shadow-[0_18px_70px_rgba(7,29,85,0.10)] sm:my-3 sm:rounded-[28px]">
-        <header className="relative overflow-hidden bg-[#075dff] px-4 pb-6 pt-4 text-white">
+        <header className="relative overflow-hidden bg-[#075dff] px-4 pb-5 pt-4 text-white">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,#004ac6_0%,#0d73ff_54%,#0043bd_100%)]" />
-          <div className="absolute left-[48%] top-0 h-full w-24 rotate-12 bg-white/8" />
+          <div className="absolute left-[50%] top-0 h-full w-20 rotate-12 bg-white/7" />
 
           <div className="relative flex items-center justify-between gap-3">
             <Link href={isLoggedIn ? "/user" : "/"} prefetch={false} aria-label="DayaKlik" className="flex min-w-0 flex-1 items-center gap-2">
-              <span className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[14px] bg-white shadow-[0_10px_24px_rgba(0,35,112,0.20)]">
-                <img src={asset("02_logo_brand/simbol_logo_transparan.png")} alt="" className="h-[40px] w-[40px] object-contain" />
+              <span className="grid h-11 w-11 shrink-0 place-items-center">
+                <img src={asset("02_logo_brand/simbol_logo_transparan.png")} alt="" className="h-11 w-11 object-contain drop-shadow-[0_8px_16px_rgba(0,35,112,0.22)]" />
               </span>
               <span className="min-w-0">
-                <span className="block truncate text-[23px] font-black leading-none text-white">
+                <span className="block truncate text-[22px] font-black leading-none text-white">
                   Daya<span className="text-[#dfff5d]">Klik</span>
                 </span>
                 <span className="mt-1 block truncate text-[9px] font-black uppercase leading-none text-white/82">
@@ -131,7 +131,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                 <Link
                   href="/user/account"
                   prefetch={false}
-                  className="inline-flex h-10 max-w-[98px] items-center justify-center gap-1 rounded-full bg-white/14 px-3 text-[13px] font-black leading-none text-white ring-1 ring-white/20"
+                  className="inline-flex h-9 max-w-[98px] items-center justify-center gap-1 rounded-[12px] bg-white/14 px-3 text-[13px] font-black leading-none text-white ring-1 ring-white/20"
                 >
                   <span className="truncate">{shownName}</span>
                   <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={3} />
@@ -140,8 +140,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                 <Link
                   href="/login"
                   prefetch={false}
-                  className="grid h-10 min-w-[86px] place-items-center rounded-full bg-white px-5 text-sm font-black leading-none shadow-[0_10px_22px_rgba(0,42,130,0.18)]"
-                  style={{ color: "#075dff" }}
+                  className="grid h-9 min-w-[76px] place-items-center rounded-[12px] border border-white/40 bg-white/16 px-4 text-sm font-black leading-none text-white shadow-[0_8px_18px_rgba(0,42,130,0.12)]"
                 >
                   <span>Masuk</span>
                 </Link>
