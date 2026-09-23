@@ -31,7 +31,7 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
 
   return (
     <section className="brand-bottom-nav fixed bottom-3 left-1/2 z-[90] w-full max-w-[390px] -translate-x-1/2 overflow-visible px-4">
-      <div className="rounded-[24px] border border-white/85 bg-white/96 px-3 py-2 shadow-[0_-6px_32px_rgba(6,48,111,0.14),0_18px_38px_rgba(6,48,111,0.12)] backdrop-blur-xl">
+      <div className="rounded-[18px] border border-white/85 bg-white/96 px-3 py-2 shadow-[0_-6px_28px_rgba(6,48,111,0.10),0_14px_30px_rgba(6,48,111,0.10)] backdrop-blur-xl">
       <div className="grid grid-cols-5 items-end pb-[calc(0.35rem+env(safe-area-inset-bottom))] pt-2">
         <Link href="/" prefetch={false} className={navClass(homeActive)}>
           <span className={homeActive ? `${iconWrapClass} bg-[#e9f4ff]` : iconWrapClass}>

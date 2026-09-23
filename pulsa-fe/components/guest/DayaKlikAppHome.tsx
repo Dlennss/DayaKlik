@@ -221,7 +221,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
         </main>
 
         <nav className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 px-4 pb-3">
-          <div className="rounded-[24px] border border-white/80 bg-white/95 px-3 py-2 shadow-[0_-8px_30px_rgba(7,29,85,0.12)] backdrop-blur">
+          <div className="rounded-[18px] border border-white/80 bg-white/95 px-3 py-2 shadow-[0_-8px_28px_rgba(7,29,85,0.10)] backdrop-blur">
             <div className="grid grid-cols-5 items-end gap-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
