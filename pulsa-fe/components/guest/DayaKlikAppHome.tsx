@@ -37,6 +37,23 @@ type DayaKlikAppHomeProps = {
   isLoggedIn?: boolean;
 };
 
+function getHref(href: string, isLoggedIn: boolean) {
+  if (!isLoggedIn) return href;
+
+  const userRoutes: Record<string, string> = {
+    "/login": "/user/account",
+    "/transaksi": "/user/transaksi",
+    "/kategori": "/user/kategori",
+    "/pulsa": "/user/pulsa",
+    "/paket-data": "/user/paket-data",
+    "/listrik/token": "/user/listrik/token",
+    "/ewallet": "/user/ewallet",
+    "/promo": "/user",
+  };
+
+  return userRoutes[href] || href;
+}
+
 export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
   return (
     <div className="min-h-dvh bg-[#eef6ff] text-[#071d55]">
@@ -49,7 +66,7 @@ export function DayaKlikAppHome({ isLoggedIn = false }: DayaKlikAppHomeProps) {
             draggable={false}
           />
           {hotspots.map((item) => {
-            const href = item.href === "/login" && isLoggedIn ? "/user/account" : item.href;
+            const href = getHref(item.href, isLoggedIn);
             return (
               <Link
                 key={`${item.label}-${item.href}`}
