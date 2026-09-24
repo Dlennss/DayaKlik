@@ -143,7 +143,6 @@ export function RetailTopupClient({ authToken, initialAmount = 0 }: Props) {
       <section className="px-1">
         <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#185adb]">Isi Saldo</p>
         <h1 className="mt-1 text-2xl font-black text-slate-950">Topup saldo</h1>
-        <p className="mt-1 text-xs font-semibold text-slate-500">Pembayaran diproses melalui QRIS dan tercatat otomatis di Pulsa24Jam.</p>
       </section>
 
       {error ? <div className="rounded-2xl border border-rose-300 bg-rose-50 px-4 py-3 text-xs font-bold text-rose-700">{error}</div> : null}
