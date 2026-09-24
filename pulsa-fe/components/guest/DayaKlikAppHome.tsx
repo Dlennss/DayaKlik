@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, ChevronDown, ChevronRight, EyeOff, History, Home, Plus, ReceiptText, Send, UserRound, WalletCards } from "lucide-react";
+import { Bell, ChevronDown, ChevronRight, EyeOff, History, House, Plus, ReceiptText, Send, UserRound, WalletCards } from "lucide-react";
 
 const asset = (path: string) => `/dayaklik-assets/${path}`;
 
@@ -25,7 +25,7 @@ const promos = [
 ];
 
 const navItems = [
-  { label: "Beranda", href: "/", icon: Home, active: true },
+  { label: "Beranda", href: "/", icon: House, active: true },
   { label: "Riwayat", href: "/transaksi", icon: History },
   { label: "Saldo", href: "/login", icon: WalletCards },
   { label: "Akun", href: "/login", icon: UserRound },
@@ -75,6 +75,12 @@ function displayName(name?: string | null) {
   const clean = String(name || "").trim();
   if (!clean) return "Akun";
   return clean.split(/\s+/)[0] || "Akun";
+}
+
+function bottomNavClass(active: boolean) {
+  return active
+    ? "flex min-w-0 flex-col items-center gap-1 py-1 text-[#075dff]! visited:text-[#075dff]!"
+    : "flex min-w-0 flex-col items-center gap-1 py-1 text-[#8da0bd]! transition visited:text-[#8da0bd]! hover:text-[#12316b]!";
 }
 
 export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: DayaKlikAppHomeProps) {
@@ -207,7 +213,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
           </section>
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 overflow-hidden rounded-t-[24px] border-t border-[#12316b]/10 bg-white/96 shadow-[0_-14px_34px_rgba(7,93,255,0.10)] backdrop-blur-xl">
+        <nav className="fixed bottom-0 left-1/2 z-[90] w-full max-w-[390px] -translate-x-1/2 overflow-hidden rounded-t-[24px] border-t border-[#12316b]/10 bg-white/96 shadow-[0_-14px_34px_rgba(6,78,59,0.10)] backdrop-blur-xl">
           <div className="grid grid-cols-4 px-5 pb-[calc(0.65rem+env(safe-area-inset-bottom))] pt-3">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -218,7 +224,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                     href={href}
                     prefetch={false}
                     aria-label={item.label}
-                    className={item.active ? "flex min-w-0 flex-col items-center gap-1 py-1 text-[#075dff]" : "flex min-w-0 flex-col items-center gap-1 py-1 text-[#8da0bd]"}
+                    className={bottomNavClass(Boolean(item.active))}
                   >
                     <span
                       className={
@@ -229,7 +235,7 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
                     >
                       <Icon className="h-[22px] w-[22px]" strokeWidth={item.active ? 2.4 : 1.9} />
                     </span>
-                    <span className={item.active ? "text-[12px] font-black leading-none text-[#075dff]" : "text-[12px] font-bold leading-none text-[#8da0bd]"}>
+                    <span className="text-[12px] font-bold leading-none">
                       {item.label}
                     </span>
                   </Link>
