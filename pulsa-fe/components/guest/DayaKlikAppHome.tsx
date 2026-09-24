@@ -1,20 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Bell,
-  ChevronDown,
-  ChevronRight,
-  ClipboardList,
-  EyeOff,
-  Home,
-  Plus,
-  QrCode,
-  ReceiptText,
-  Send,
-  Tag,
-  UserRound,
-} from "lucide-react";
+import { Bell, ChevronDown, ChevronRight, EyeOff, History, Home, Plus, ReceiptText, Send, UserRound, WalletCards } from "lucide-react";
 
 const asset = (path: string) => `/dayaklik-assets/${path}`;
 
@@ -39,9 +26,8 @@ const promos = [
 
 const navItems = [
   { label: "Beranda", href: "/", icon: Home, active: true },
-  { label: "Transaksi", href: "/transaksi", icon: ClipboardList },
-  { label: "Scan", href: "/kategori", icon: QrCode },
-  { label: "Promo", href: "/promo", icon: Tag },
+  { label: "Riwayat", href: "/transaksi", icon: History },
+  { label: "Saldo", href: "/login", icon: WalletCards },
   { label: "Akun", href: "/login", icon: UserRound },
 ];
 
@@ -57,6 +43,7 @@ function getHref(href: string, isLoggedIn: boolean) {
   const userRoutes: Record<string, string> = {
     "/login": "/user/account",
     "/transaksi": "/user/transaksi",
+    "/user/saldo": "/user/saldo",
     "/kategori": "/user/kategori",
     "/pulsa": "/user/pulsa",
     "/paket-data": "/user/paket-data",
@@ -220,36 +207,34 @@ export function DayaKlikAppHome({ isLoggedIn = false, userName, saldo = 0 }: Day
           </section>
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 px-4 pb-3">
-          <div className="rounded-[18px] border border-white/80 bg-white/95 px-3 py-2 shadow-[0_-8px_28px_rgba(7,29,85,0.10)] backdrop-blur">
-            <div className="grid grid-cols-5 items-end gap-1">
+        <nav className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 overflow-hidden rounded-t-[24px] border-t border-[#12316b]/10 bg-white/96 shadow-[0_-14px_34px_rgba(7,93,255,0.10)] backdrop-blur-xl">
+          <div className="grid grid-cols-4 px-5 pb-[calc(0.65rem+env(safe-area-inset-bottom))] pt-3">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const href = getHref(item.href, isLoggedIn);
+                const href = item.label === "Saldo" ? (isLoggedIn ? "/user/saldo" : "/login") : getHref(item.href, isLoggedIn);
                 return (
                   <Link
                     key={item.label}
                     href={href}
                     prefetch={false}
                     aria-label={item.label}
-                    className={item.active ? "flex flex-col items-center gap-1 text-[#075dff]" : "flex flex-col items-center gap-1 text-[#8da0bd]"}
+                    className={item.active ? "flex min-w-0 flex-col items-center gap-1 py-1 text-[#075dff]" : "flex min-w-0 flex-col items-center gap-1 py-1 text-[#8da0bd]"}
                   >
                     <span
                       className={
                         item.active
-                          ? "grid h-10 min-w-12 place-items-center rounded-[13px] bg-[#eaf3ff] text-[#075dff]"
-                          : "grid h-10 min-w-12 place-items-center text-[#8da0bd]"
+                          ? "grid h-10 min-w-14 place-items-center rounded-[13px] bg-[#eaf3ff] text-[#075dff]"
+                          : "grid h-10 min-w-14 place-items-center text-[#8da0bd]"
                       }
                     >
-                      <Icon className="h-[22px] w-[22px]" strokeWidth={item.active ? 2.5 : 2} />
+                      <Icon className="h-[22px] w-[22px]" strokeWidth={item.active ? 2.4 : 1.9} />
                     </span>
-                    <span className={item.active ? "text-[12px] font-black text-[#075dff]" : "text-[12px] font-bold text-[#8da0bd]"}>
+                    <span className={item.active ? "text-[12px] font-black leading-none text-[#075dff]" : "text-[12px] font-bold leading-none text-[#8da0bd]"}>
                       {item.label}
                     </span>
                   </Link>
                 );
               })}
-            </div>
           </div>
         </nav>
       </div>
