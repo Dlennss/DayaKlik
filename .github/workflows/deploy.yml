@@ -115,13 +115,36 @@ jobs:
           BACKEND_RESTART_COMMAND: ${{ secrets.BACKEND_RESTART_COMMAND }}
           FRONTEND_RESTART_COMMAND: ${{ secrets.FRONTEND_RESTART_COMMAND }}
           FRONTEND_PORT: ${{ secrets.FRONTEND_PORT }}
+          PULSA24JAM_BASE_URL: ${{ secrets.PULSA24JAM_BASE_URL }}
+          PULSA24JAM_MEMBER_ID: ${{ secrets.PULSA24JAM_MEMBER_ID }}
+          PULSA24JAM_API_KEY: ${{ secrets.PULSA24JAM_API_KEY }}
+          PULSA24JAM_PIN: ${{ secrets.PULSA24JAM_PIN }}
+          PULSA24JAM_PASSWORD: ${{ secrets.PULSA24JAM_PASSWORD }}
+          PULSA24JAM_SECRET: ${{ secrets.PULSA24JAM_SECRET }}
+          PULSA24JAM_CALLBACK_TOKEN: ${{ secrets.PULSA24JAM_CALLBACK_TOKEN }}
+          PULSA24JAM_CALLBACK_IP: ${{ secrets.PULSA24JAM_CALLBACK_IP }}
+          PULSA24JAM_TIMEOUT: ${{ secrets.PULSA24JAM_TIMEOUT }}
           DEPLOY_TMP: /tmp/dayaklik-${{ github.sha }}
         run: |
+          encode_env() {
+            printf '%s' "${1:-}" | base64 -w 0
+          }
+
           SUDO_PASSWORD_B64="$(printf '%s' "$SSHPASS" | base64 -w 0)"
           BACKEND_RESTART_COMMAND_B64="$(printf '%s' "$BACKEND_RESTART_COMMAND" | base64 -w 0)"
           FRONTEND_RESTART_COMMAND_B64="$(printf '%s' "$FRONTEND_RESTART_COMMAND" | base64 -w 0)"
+          PULSA24JAM_BASE_URL_B64="$(encode_env "${PULSA24JAM_BASE_URL:-}")"
+          PULSA24JAM_MEMBER_ID_B64="$(encode_env "${PULSA24JAM_MEMBER_ID:-}")"
+          PULSA24JAM_API_KEY_B64="$(encode_env "${PULSA24JAM_API_KEY:-}")"
+          PULSA24JAM_PIN_B64="$(encode_env "${PULSA24JAM_PIN:-}")"
+          PULSA24JAM_PASSWORD_B64="$(encode_env "${PULSA24JAM_PASSWORD:-}")"
+          PULSA24JAM_SECRET_B64="$(encode_env "${PULSA24JAM_SECRET:-}")"
+          PULSA24JAM_CALLBACK_TOKEN_B64="$(encode_env "${PULSA24JAM_CALLBACK_TOKEN:-}")"
+          PULSA24JAM_CALLBACK_IP_B64="$(encode_env "${PULSA24JAM_CALLBACK_IP:-}")"
+          PULSA24JAM_TIMEOUT_B64="$(encode_env "${PULSA24JAM_TIMEOUT:-}")"
+
           sshpass -e ssh -o StrictHostKeyChecking=no -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" \
-            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' FRONTEND_PORT='$FRONTEND_PORT' DEPLOY_TMP='$DEPLOY_TMP' SUDO_PASSWORD_B64='$SUDO_PASSWORD_B64' BACKEND_RESTART_COMMAND_B64='$BACKEND_RESTART_COMMAND_B64' FRONTEND_RESTART_COMMAND_B64='$FRONTEND_RESTART_COMMAND_B64' bash -s" <<'REMOTE'
+            "BACKEND_SOURCE_DIR='$BACKEND_SOURCE_DIR' FRONTEND_RELEASE_DIR='$FRONTEND_RELEASE_DIR' FRONTEND_PORT='$FRONTEND_PORT' DEPLOY_TMP='$DEPLOY_TMP' SUDO_PASSWORD_B64='$SUDO_PASSWORD_B64' BACKEND_RESTART_COMMAND_B64='$BACKEND_RESTART_COMMAND_B64' FRONTEND_RESTART_COMMAND_B64='$FRONTEND_RESTART_COMMAND_B64' PULSA24JAM_BASE_URL_B64='$PULSA24JAM_BASE_URL_B64' PULSA24JAM_MEMBER_ID_B64='$PULSA24JAM_MEMBER_ID_B64' PULSA24JAM_API_KEY_B64='$PULSA24JAM_API_KEY_B64' PULSA24JAM_PIN_B64='$PULSA24JAM_PIN_B64' PULSA24JAM_PASSWORD_B64='$PULSA24JAM_PASSWORD_B64' PULSA24JAM_SECRET_B64='$PULSA24JAM_SECRET_B64' PULSA24JAM_CALLBACK_TOKEN_B64='$PULSA24JAM_CALLBACK_TOKEN_B64' PULSA24JAM_CALLBACK_IP_B64='$PULSA24JAM_CALLBACK_IP_B64' PULSA24JAM_TIMEOUT_B64='$PULSA24JAM_TIMEOUT_B64' bash -s" <<'REMOTE'
           set -euo pipefail
 
           sudo_with_password() {
@@ -157,6 +180,42 @@ jobs:
                 rm -rf -- "$item"
               fi
             done
+          }
+
+          decode_env_value() {
+            if [ -z "${1:-}" ]; then
+              return 0
+            fi
+            printf '%s' "$1" | base64 -d
+          }
+
+          upsert_env_var() {
+            env_file="$1"
+            key="$2"
+            value="$3"
+
+            if [ -z "$value" ]; then
+              return 0
+            fi
+
+            touch "$env_file"
+            tmp_file="$(mktemp)"
+            awk -v key="$key" -v value="$value" '
+              BEGIN { found = 0 }
+              $0 ~ "^" key "=" {
+                print key "=" value
+                found = 1
+                next
+              }
+              { print }
+              END {
+                if (!found) {
+                  print key "=" value
+                }
+              }
+            ' "$env_file" > "$tmp_file"
+            mv "$tmp_file" "$env_file"
+            chmod 600 "$env_file" 2>/dev/null || true
           }
 
           if [ -z "$FRONTEND_RELEASE_DIR" ]; then
@@ -216,6 +275,19 @@ jobs:
             cp -a "$BACKEND_EXTRACT"/. "$BACKEND_SOURCE_DIR"/
           fi
           cp -a "$FRONTEND_EXTRACT"/. "$FRONTEND_RELEASE_DIR"/
+
+          if [ -n "$BACKEND_SOURCE_DIR" ]; then
+            BACKEND_ENV_FILE="$BACKEND_SOURCE_DIR/.env"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_BASE_URL" "$(decode_env_value "${PULSA24JAM_BASE_URL_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_MEMBER_ID" "$(decode_env_value "${PULSA24JAM_MEMBER_ID_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_API_KEY" "$(decode_env_value "${PULSA24JAM_API_KEY_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_PIN" "$(decode_env_value "${PULSA24JAM_PIN_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_PASSWORD" "$(decode_env_value "${PULSA24JAM_PASSWORD_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_SECRET" "$(decode_env_value "${PULSA24JAM_SECRET_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_CALLBACK_TOKEN" "$(decode_env_value "${PULSA24JAM_CALLBACK_TOKEN_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_CALLBACK_IP" "$(decode_env_value "${PULSA24JAM_CALLBACK_IP_B64:-}")"
+            upsert_env_var "$BACKEND_ENV_FILE" "PULSA24JAM_TIMEOUT" "$(decode_env_value "${PULSA24JAM_TIMEOUT_B64:-}")"
+          fi
 
           if [ ! -f "$FRONTEND_RELEASE_DIR/public/dayaklik-assets/01_bagian_utama/dashboard_lengkap.png" ]; then
             echo "::error::New DayaKlik dashboard asset was not copied to FRONTEND_RELEASE_DIR/public. Check FRONTEND_RELEASE_DIR."
