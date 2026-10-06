@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const root = "/home/syarif/app/pulsakilat-fe";
+const root = process.cwd();
 const inputPath = path.join(root, "scripts", "yuscom-display-brands.txt");
 const outputDir = path.join(root, "public", "yuscom-display-brand-logos-generated");
 const manifestPath = path.join(root, "lib", "generated-yuscom-display-brand-map.json");
