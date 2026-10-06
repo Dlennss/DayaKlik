@@ -42,7 +42,7 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
           <span className={historyActive ? `${iconWrapClass} bg-[#e9f4ff]` : iconWrapClass}>
             <ClipboardList className={iconClass} strokeWidth={historyActive ? 2.5 : 2} />
           </span>
-          <span className={textClass}>Transaksi</span>
+          <span className={textClass}>Riwayat</span>
         </Link>
 
         <Link href={accountHref} prefetch={false} className={navClass(accountActive)}>
