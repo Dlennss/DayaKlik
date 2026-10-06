@@ -139,10 +139,6 @@ func resolvePulsa24JamAppRequest(providerProductCode string, order *repository.A
 }
 
 func pulsa24JamAppOrderRefID(order *repository.AppOrderRow) string {
-	if order != nil && order.ID > 0 {
-		return "PKA" + strings.ToUpper(strconv.FormatInt(order.ID, 36))
-	}
-
 	invoice := ""
 	if order != nil {
 		invoice = order.InvoiceID
@@ -160,6 +156,9 @@ func pulsa24JamAppOrderRefID(order *repository.AppOrderRow) string {
 		}
 	}, invoice)
 	if invoice == "" {
+		if order != nil && order.ID > 0 {
+			return "PKA" + strings.ToUpper(strconv.FormatInt(order.ID, 36))
+		}
 		return "PKA"
 	}
 	if len(invoice) > 17 {
