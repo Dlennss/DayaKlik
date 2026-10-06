@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ClipboardList, Home, Tag, UserRound } from "lucide-react";
+import { ClipboardList, Home, UserRound } from "lucide-react";
 
 function navClass(active: boolean, extra = "") {
   return active
@@ -22,7 +22,6 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
   const pathname = usePathname() || "";
   const homeActive = pathname === "/";
   const historyActive = pathname.startsWith("/transaksi");
-  const promoActive = pathname.startsWith("/promo");
   const accountHref = isLoggedIn ? "/user/account" : "/login";
   const accountActive = isLoggedIn
     ? pathname.startsWith("/user/account")
@@ -31,7 +30,7 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
   return (
     <section className="brand-bottom-nav fixed bottom-3 left-1/2 z-[90] w-full max-w-[390px] -translate-x-1/2 overflow-visible px-4">
       <div className="rounded-[18px] border border-white/85 bg-white/96 px-3 py-2 shadow-[0_-6px_28px_rgba(6,48,111,0.10),0_14px_30px_rgba(6,48,111,0.10)] backdrop-blur-xl">
-      <div className="grid grid-cols-4 items-end pb-[calc(0.35rem+env(safe-area-inset-bottom))] pt-2">
+      <div className="grid grid-cols-3 items-end pb-[calc(0.35rem+env(safe-area-inset-bottom))] pt-2">
         <Link href="/" prefetch={false} className={navClass(homeActive)}>
           <span className={homeActive ? `${iconWrapClass} bg-[#e9f4ff]` : iconWrapClass}>
             <Home className={iconClass} strokeWidth={homeActive ? 2.5 : 2} />
@@ -44,13 +43,6 @@ export function GuestBottomNav({ isLoggedIn = false }: GuestBottomNavProps) {
             <ClipboardList className={iconClass} strokeWidth={historyActive ? 2.5 : 2} />
           </span>
           <span className={textClass}>Transaksi</span>
-        </Link>
-
-        <Link href="/promo" prefetch={false} className={navClass(promoActive)}>
-          <span className={promoActive ? `${iconWrapClass} bg-[#e9f4ff]` : iconWrapClass}>
-            <Tag className={iconClass} strokeWidth={promoActive ? 2.5 : 2} />
-          </span>
-          <span className={textClass}>Promo</span>
         </Link>
 
         <Link href={accountHref} prefetch={false} className={navClass(accountActive)}>
